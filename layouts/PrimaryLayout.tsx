@@ -5,6 +5,8 @@ import 'locomotive-scroll/dist/locomotive-scroll.min.css';
 import { Header } from '@/components/Header/Header';
 import { ScrollReset } from '@/components/ScrollReset';
 
+const SMOOTH_SCROLL = false;
+
 interface PropsI {
   children: JSX.Element;
 }
@@ -18,7 +20,7 @@ export function PrimaryLayout({ children }: PropsI): JSX.Element {
 
       <LocomotiveScrollProvider
         containerRef={containerRef}
-        options={{ smooth: true }}
+        options={{ smooth: SMOOTH_SCROLL }}
       >
         <ScrollReset>
           <main data-scroll-container ref={containerRef}>

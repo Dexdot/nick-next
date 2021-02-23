@@ -2,15 +2,15 @@ import React from 'react';
 import Link from 'next/link';
 import { Head } from '@/components/Head';
 
-export default function Other(): JSX.Element {
+export default function Black(): JSX.Element {
   return (
     <>
-      <Head title="Other" />
+      <Head title="Black" />
 
       <div data-scroll-section>
-        <h2>This is H2</h2>
+        <h1>Black</h1>
         <Link href="/">
-          <a href="/">Go to home page</a>
+          <a href="/">Go to index</a>
         </Link>
         <p>
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus

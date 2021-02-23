@@ -8,9 +8,9 @@ export default function Home(): JSX.Element {
       <Head title="Index" />
 
       <div data-scroll-section>
-        <h1>This is H1</h1>
-        <Link href="/other">
-          <a href="/other">Go to other page</a>
+        <h1>Index</h1>
+        <Link href="/black">
+          <a href="/black">Go to black page</a>
         </Link>
         <p>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae,
