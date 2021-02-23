@@ -1,0 +1,47 @@
+@import "responsive"
+
+=hoves
+  font-weight: 300
+  font-family: 'TT Hoves'
+
+=h1
+  +responsive('font-size', (375px: 64px, 1920px: 200px))
+=h2
+  +responsive('font-size', (375px: 36px, 1920px: 144px))
+=h3
+  +responsive('font-size', (375px: 24px, 1920px: 72px))
+
+body
+  +hoves
+  +responsive('font-size', (375px: 18px, 1920px: 20px))
+  line-height: 1.2
+  font-variant-ligatures: none
+
+b
+  +hoves
+
+h1
+  +h1
+h2
+  +h2
+h3
+  +h3
+
+.t-h1
+  +h1
+  +hoves
+  letter-spacing: -0.06em
+  line-height: 0.96
+
+.t-h2
+  +h2
+  +hoves
+  letter-spacing: -0.04em
+  line-height: 0.88
+
+.t-h3
+  +h3
+  +hoves
+  letter-spacing: -0.04em
+  line-height: 0.96
+
