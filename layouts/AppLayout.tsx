@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { LocomotiveScrollProvider } from 'react-locomotive-scroll';
 import 'locomotive-scroll/dist/locomotive-scroll.min.css';
@@ -6,6 +6,8 @@ import 'locomotive-scroll/dist/locomotive-scroll.min.css';
 import { Darkmode } from '@/components/Darkmode/Darkmode';
 import { ScrollReset } from '@/components/ScrollReset';
 import { Header } from '@/components/Header/Header';
+import { Menu } from '@/components/Menu/Menu';
+import { initCSSProps } from '@/utils/css-props';
 
 const SMOOTH_SCROLL = true;
 
@@ -16,6 +18,10 @@ interface PropsI {
 export function AppLayout({ children }: PropsI): JSX.Element {
   const containerRef = useRef(null);
   const router = useRouter();
+
+  useEffect(() => {
+    initCSSProps();
+  }, []);
 
   return (
     <div>
@@ -32,6 +38,8 @@ export function AppLayout({ children }: PropsI): JSX.Element {
               {children}
             </main>
           </ScrollReset>
+
+          <Menu />
         </LocomotiveScrollProvider>
       </Darkmode>
     </div>
