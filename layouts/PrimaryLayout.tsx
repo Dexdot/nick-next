@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useRouter } from 'next/router';
 import { LocomotiveScrollProvider } from 'react-locomotive-scroll';
 import 'locomotive-scroll/dist/locomotive-scroll.min.css';
 
@@ -13,6 +14,7 @@ interface PropsI {
 
 export function PrimaryLayout({ children }: PropsI): JSX.Element {
   const containerRef = useRef(null);
+  const router = useRouter();
 
   return (
     <div>
@@ -21,6 +23,7 @@ export function PrimaryLayout({ children }: PropsI): JSX.Element {
       <LocomotiveScrollProvider
         containerRef={containerRef}
         options={{ smooth: SMOOTH_SCROLL }}
+        watch={[router.pathname]}
       >
         <ScrollReset>
           <main data-scroll-container ref={containerRef}>

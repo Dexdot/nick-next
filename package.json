@@ -17,11 +17,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "npx eslint '**/*.{js,jsx}'",
-    "lintfix": "npx eslint '**/*.{js,jsx}' --fix"
+    "lintfix": "npx eslint '**/*.{js,jsx}' --fix",
+    "ctfl-ts": "contentful-typescript-codegen --output @types/contentful.d.ts"
   },
   "dependencies": {
     "@moxy/next-layout": "^2.2.2",
     "@reduxjs/toolkit": "^1.5.0",
+    "contentful-management": "^7.8.0",
+    "dotenv": "^8.2.0",
     "locomotive-scroll": "^4.1.0",
     "next": "10.0.7",
     "next-images": "^1.7.0",
@@ -39,6 +42,7 @@
     "@typescript-eslint/eslint-plugin": "^4.15.2",
     "@typescript-eslint/parser": "^4.15.2",
     "babel-eslint": "^10.1.0",
+    "contentful-typescript-codegen": "^3.2.1",
     "eslint": "^7.20.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.0.0",
