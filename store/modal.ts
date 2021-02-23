@@ -21,23 +21,17 @@ export const closeModal = createAction('modal/closeModal');
 
 // Reducer
 export const modal = createReducer<ModalI>(initialState, (builder) => {
-  builder.addCase(closeModal, () => {
-    return {
-      name: '',
-      open: false,
-      isScrollDisabled: false
-    };
-  });
+  builder.addCase(closeModal, () => ({
+    name: '',
+    open: false,
+    isScrollDisabled: false
+  }));
 
-  builder.addCase(openModal, (prevState, { payload }) => {
-    const name = payload;
-
-    return {
-      name,
-      open: true,
-      isScrollDisabled: true
-    };
-  });
+  builder.addCase(openModal, (prevState, { payload }) => ({
+    name: payload,
+    open: true,
+    isScrollDisabled: true
+  }));
 
   builder.addCase(toggleModal, (prevState, { payload }) => {
     const name = payload;

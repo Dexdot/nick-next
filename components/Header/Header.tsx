@@ -30,7 +30,7 @@ export function Header(): JSX.Element {
 
   const isHeaderDark = useMemo(() => {
     return modal.open ? OTHER_MODALS.includes(modal.name) : isDarkmode;
-  }, []);
+  }, [modal.open, modal.name, isDarkmode]);
 
   const onButtonClick = useCallback(() => {
     if (modal.open) {
@@ -55,7 +55,7 @@ export function Header(): JSX.Element {
         <div className={cls.inner}>
           <div className={cn(cls.logo, { [cls.hidden]: isAboutPage })}>
             <Link href="/">
-              <>{isHeaderDark ? <LogoWhite /> : <LogoBlack />}</>
+              <a href="/">{isHeaderDark ? <LogoWhite /> : <LogoBlack />}</a>
             </Link>
           </div>
 

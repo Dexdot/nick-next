@@ -7,11 +7,15 @@ export type DarkMode = boolean;
 const initialState = false;
 
 // Actions
-export const toggle = createAction<DarkMode>('darkmode/toggle');
+export const enableDarkmode = createAction('darkmode/enableDarkmode');
+export const disableDarkmode = createAction('darkmode/disableDarkmode');
+export const toggleDarkmode = createAction<DarkMode>('darkmode/toggleDarkmode');
 
 // Reducer
 export const darkmode = createReducer<DarkMode>(initialState, (builder) => {
-  builder.addCase(toggle, (prevState, { payload }) => {
-    return payload !== undefined ? payload : !prevState;
-  });
+  builder.addCase(enableDarkmode, () => true);
+  builder.addCase(disableDarkmode, () => false);
+  builder.addCase(toggleDarkmode, (prevState, { payload }) =>
+    payload !== undefined ? payload : !prevState
+  );
 });
