@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
-import { example } from '@/store/example';
+import { darkmode } from '@/store/darkmode';
+import { modal } from '@/store/modal';
 
-export const rootReducer = combineReducers({ example });
+export const rootReducer = combineReducers({ darkmode, modal });
 export type RootState = ReturnType<typeof rootReducer>;

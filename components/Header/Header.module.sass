@@ -1,5 +1,83 @@
+@import "@/styles/breakpoints"
+  
 .header
+  z-index: 3
+  position: fixed
+  top: 24px
+  left: 0
+
+  width: 100vw
+
+  @media (max-width: $mob)
+    top: 8px
+
+.header,
+.logo,
+.button
+  transition: opacity 0.25s ease
+
+.logo
+  display: flex
+
+.hidden
+  opacity: 0
+  pointer-events: none
+
+.inner
+  display: flex
+  align-items: flex-start
+  justify-content: space-between
+
+.button
+  position: relative
+  width: 40px
+  height: 40px
+
+  &:hover
+    opacity: 0.3
+
+.button_active .button_inner
+  transform: rotate(45deg)
+
+.button_inner
+  transition: transform 0.25s ease-in-out
+  transform-origin: 50% 50%
+  
   position: absolute
   top: 0
-  left: 0
-  width: 100%
+  right: 0
+
+  display: flex
+  flex-wrap: wrap
+  width: 12px
+  height: 12px
+
+.button_circle
+  background: #1F2020
+  border-radius: 50%
+
+  min-width: 4px
+  width: 4px
+  height: 4px
+
+  &:nth-child(3),
+  &:nth-child(4)
+    margin-top: 4px
+
+  &:nth-child(1),
+  &:nth-child(3)
+    margin-right: 4px
+
+.dark
+  color: white
+
+  .button_circle
+    background: white
+
+  .logo a
+    &,
+    &:visited,
+    &:active,
+    &:focus
+      color: white
+
