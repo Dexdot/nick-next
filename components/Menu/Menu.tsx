@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import cn from 'classnames';
+import { CSSTransition } from 'react-transition-group';
 
 import { RootState } from '@/store/root-reducer';
 
@@ -15,19 +15,26 @@ export function Menu(): JSX.Element {
   ]);
 
   return (
-    <section className={cn(cls.container, { [cls.hidden]: !isOpen })}>
-      <div className={cls.overlay} />
-      <nav className={cls.nav}>Nav</nav>
+    <CSSTransition
+      classNames={{ ...cls }}
+      timeout={1000}
+      in={isOpen}
+      unmountOnExit
+    >
+      <section className={cls.container} key="menu">
+        <div className={cls.overlay} />
+        <nav className={cls.nav}>Nav</nav>
 
-      <a
-        className={cls.social}
-        href="https://instagram.com/stereocage"
-        target="_blank"
-        rel="noreferrer"
-      >
-        <Instagram />
-      </a>
-    </section>
+        <a
+          className={cls.social}
+          href="https://instagram.com/stereocage"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <Instagram />
+        </a>
+      </section>
+    </CSSTransition>
   );
 }
 

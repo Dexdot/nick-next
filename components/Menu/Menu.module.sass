@@ -1,5 +1,85 @@
 @import "@/styles/breakpoints"
-  
+
+/* ENTER */
+.enter
+  pointer-events: none
+
+  .nav li,
+  .social
+    opacity: 0
+    transform: translateY(16px)
+
+  .overlay
+    transform: translateY(101%)
+
+
+.enterActive
+  pointer-events: auto
+
+  .overlay,
+  .nav li
+    opacity: 1
+
+  .social
+    opacity: 0.4
+
+  .overlay,
+  .nav li,
+  .social
+    transform: translateY(0%)
+
+
+.enterActive
+  transition: 1s ease-in-out
+
+  .overlay,
+  .social
+    transition: 0.8s cubic-bezier(0.645, 0.045, 0.355, 1)
+
+@for $i from 1 through 5
+  .enterActive .nav li:nth-child(#{$i})
+    transition: 0.4s ease (#{$i*0.05s + 0.5s})
+
+
+/* EXIT */
+.exit
+  pointer-events: auto
+
+  .nav li
+    opacity: 1
+
+  .social
+    opacity: 0.4
+
+  .nav li,
+  .social,
+  .overlay
+    transform: translateY(0%)
+
+.exitActive
+  pointer-events: none
+
+  .nav li,
+  .social
+    opacity: 0
+
+  .overlay
+    transform: translateY(101%)
+
+.exitActive
+  transition: 1s ease-in-out
+
+  .overlay,
+  .social
+    transition: 0.8s cubic-bezier(0.645, 0.045, 0.355, 1)
+
+@for $i from 1 through 5
+  .exitActive .nav li:nth-child(#{$i})
+    transition: 0.4s ease (#{$i*0.05s})
+
+
+
+// Styles
 .container
   z-index: 2
   position: fixed
@@ -11,12 +91,6 @@
   width: 100vw
   height: 100vh
   height: calc(var(--vh, 1vh) * 100)
-
-  transition: opacity 0.25s ease
-
-.hidden
-  opacity: 0
-  pointer-events: none
 
 .overlay
   background: #000
@@ -59,7 +133,7 @@
 
 // Link hover
 // .menu__nav .menu__link,
-// .menu__social a
+// .social a
 //   transition: 0.25s ease
 
 // .menu__nav .menu__link:not(.nuxt-link-exact-active)
@@ -78,5 +152,5 @@
 //   .menu__link.nuxt-link-exact-active:hover
 //     opacity: 0.3
 
-// .menu__social a:hover
+// .social a:hover
 //   opacity: 1
