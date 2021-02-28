@@ -1,4 +1,5 @@
 @import "@/styles/breakpoints"
+@import "@/styles/responsive"
 
 /* ENTER */
 .enter
@@ -117,6 +118,11 @@
   a:focus
     color: white
 
+.link
+  +responsive('font-size', (375px: 64px, 1920px: 96px))
+  letter-spacing: -0.04em
+  line-height: 0.96
+
 .social
   position: absolute
   bottom: 24px
@@ -132,25 +138,25 @@
     bottom: 16px
 
 // Link hover
-// .menu__nav .menu__link,
-// .social a
-//   transition: 0.25s ease
+.nav .link,
+.social a
+  transition: 0.25s ease
 
-// .menu__nav .menu__link:not(.nuxt-link-exact-active)
-//   opacity: 0.3
+.nav .link:not([data-active])
+  opacity: 0.3
 
-// .menu__nav .menu__link.nuxt-link-exact-active
-//   opacity: 1
+.nav .link[data-active]
+  opacity: 1
 
-// .menu__nav:hover
-//   .menu__link:not(.nuxt-link-exact-active),
-//   .menu__link.nuxt-link-exact-active
-//     opacity: 1
+.nav:hover
+  .link:not([data-active]),
+  .link[data-active]
+    opacity: 1
 
-// .menu__nav
-//   .menu__link:not(.nuxt-link-exact-active):hover,
-//   .menu__link.nuxt-link-exact-active:hover
-//     opacity: 0.3
+.nav
+  .link:not([data-active]):hover,
+  .link[data-active]:hover
+    opacity: 0.3
 
-// .social a:hover
-//   opacity: 1
+.social a:hover
+  opacity: 1
