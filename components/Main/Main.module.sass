@@ -1,0 +1,391 @@
+@import "@/styles/responsive"
+@import "@/styles/breakpoints"
+@import "@/styles/grid-fn"
+  
+.container
+  padding-top: 200px
+
+  @media (max-width: $tab-sm)
+    padding-top: 224px
+
+.case
+  position: relative
+  display: flex
+  // +responsive('margin-bottom', (375px: 80px, 1920px: 240px))
+  margin-bottom: 240px
+  @media (max-width: $tab-sm)
+    margin-bottom: 80px
+
+.image
+  overflow: hidden
+  width: 100%
+  position: relative
+
+  &::before
+    content: ''
+    display: block
+    width: 100%
+    padding-top: var(--ratio)
+
+  img, video
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+
+    object-fit: cover
+    transition: transform .8s cubic-bezier(.455,.03,.515,.955)
+    transform: scaleX(1)
+
+.text
+  display: block
+  line-height: 1.2
+  +responsive('font-size', (375px: 18px, 1920px: 24px))
+
+  transition: opacity .5s cubic-bezier(.455,.03,.515,.955)
+  opacity: 0
+
+  @media (max-width: $tab-sm)
+    display: none
+
+  &,
+  & a
+    color: #000
+
+.title
+  position: relative
+  border-bottom: 1px solid #000
+  display: inline-block
+  margin-bottom: 4px
+
+.image_wrap:first-child:hover .text
+  opacity: 1
+
+.image_wrap:first-child .image:hover
+  img, video
+    transform: scale3d(1.1, 1.1, 1)
+
+.case_dark
+  .text
+    &,
+    & a
+      color: #fff
+
+  .title
+    border-bottom: 1px solid #fff
+  
+
+// 1, 15
+.case[data-index="1"],
+.case[data-index="15"]
+  padding: 0 var(--unit)
+
+  .text
+    position: absolute
+    bottom: -80px
+    right: 0
+    text-align: right
+    padding-left: 12vw
+
+  .image::before
+    --ratio: 53.5%
+    @media (max-width: $tab-sm)
+      --ratio: 64.3%
+
+  .image_wrap:nth-child(1)
+    position: relative
+    margin-left: auto
+    width: column-spans(4)
+
+    @media (max-width: $tab-sm)
+      width: 76vw
+
+  .image_wrap:nth-child(2)
+    width: 31.25vw
+
+    position: absolute
+    bottom: -80px
+    left: var(--unit)
+
+    @media (max-width: $tab-sm)
+      width: 37vw
+      bottom: -24px
+
+// 2
+.case[data-index="2"]
+  padding: 0 var(--unit)
+
+  .text
+    position: absolute
+    top: calc(100% + 16px)
+    right: 0
+    text-align: right
+
+  .image::before
+    --ratio: 147%
+    @media (max-width: $tab-sm)
+      --ratio: 150%
+
+  .image_wrap:nth-child(1)
+    position: relative
+    width: column-spans(2)
+
+    @media (max-width: $tab-sm)
+      width: 56.5vw
+
+// 3, 13
+.case[data-index="3"],
+.case[data-index="13"]
+  padding: 0 var(--unit)
+
+  .text
+    position: absolute
+    top: calc(100% + 16px)
+    left: 0
+    text-align: left
+
+  .image::before
+    --ratio: 61%
+
+  .image_wrap:nth-child(1)
+    position: relative
+    margin-left: auto
+    width: column-spans(3)
+
+    @media (max-width: $tab-sm)
+      width: 76vw
+
+// 4
+.case[data-index="4"]
+  padding: 0 var(--unit)
+
+  .text
+    position: absolute
+    top: calc(100% + 16px)
+    left: 0
+    text-align: left
+
+  .image::before
+    --ratio: 147%
+    @media (max-width: $tab-sm)
+      --ratio: 150%
+
+  .image_wrap:nth-child(1)
+    position: relative
+    margin-left: mix(1)
+    width: column-spans(2)
+
+    @media (max-width: $tab-sm)
+      margin: 0 auto
+      width: 56.5vw
+
+// 5
+.case[data-index="5"]
+  .text
+    position: absolute
+    top: calc(100% + 16px)
+    left: 0
+    text-align: left
+
+  .image::before
+    --ratio: 61%
+
+  .image_wrap:nth-child(1)
+    position: relative
+    margin-left: auto
+    width: column-spans(3)
+
+    @media (max-width: $tab-sm)
+      width: 78.4vw
+
+// 6, 14
+.case[data-index="6"],
+.case[data-index="14"]
+  padding: 0 var(--unit)
+
+  .text
+    position: absolute
+    top: calc(100% + 16px)
+    right: 0
+    text-align: right
+
+  .image::before
+    --ratio: 100%
+
+  .image_wrap:nth-child(1)
+    position: relative
+    width: column-spans(2)
+
+    @media (max-width: $tab-sm)
+      width: 56.5vw
+
+// 7
+.case[data-index="7"]
+  padding: 0 var(--unit)
+
+  .text
+    position: absolute
+    top: calc(100% + 16px)
+    right: 0
+    text-align: right
+
+  .image::before
+    --ratio: 60%
+
+  .image_wrap:nth-child(1)
+    position: relative
+    width: column-spans(4)
+
+    @media (max-width: $tab-sm)
+      width: 100%
+
+// 8
+.case[data-index="8"]
+  padding: 0 var(--unit)
+
+  .text
+    position: absolute
+    top: calc(100% + 16px)
+    left: 0
+    text-align: left
+
+  .image::before
+    --ratio: 147%
+    @media (max-width: $tab-sm)
+      --ratio: 150%
+
+  .image_wrap:nth-child(1)
+    position: relative
+    margin-left: auto
+    width: column-spans(2)
+
+    @media (max-width: $tab-sm)
+      width: 56.5vw
+
+// 9
+.case[data-index="9"]
+  .text
+    position: absolute
+    top: calc(100% + 16px)
+    right: 0
+    text-align: right
+
+  .image::before
+    --ratio: 59.6%
+    @media (max-width: $tab-sm)
+      --ratio: 62.5%
+
+  .image_wrap:nth-child(1)
+    position: relative
+    width: column-spans(3)
+
+    @media (max-width: $tab-sm)
+      width: 78.4vw
+
+// 10
+.case[data-index="10"]
+  padding: 0 var(--unit)
+
+  .text
+    position: absolute
+    top: calc(100% + 16px)
+    left: 0
+    text-align: left
+
+  .image::before
+    --ratio: 152.3%
+    @media (max-width: $tab-sm)
+      --ratio: 150%
+
+  .image_wrap:nth-child(1)
+    position: relative
+    margin-left: mix(2)
+    width: column-spans(2)
+
+    @media (max-width: $tab-sm)
+      margin-left: auto
+      width: 56.5vw
+
+// 11
+.case[data-index="11"]
+  padding: 0 var(--unit)
+
+  .text
+    position: absolute
+    bottom: -80px
+    left: 0
+    text-align: left
+
+  .image_wrap:nth-child(1)
+    position: relative
+    width: column-spans(4)
+
+    @media (max-width: $tab-sm)
+      width: 76vw
+
+    .image::before
+      --ratio: 56.2%
+      @media (max-width: $tab-sm)
+        --ratio: 64.3%
+
+  .image_wrap:nth-child(2)
+    width: 31.25vw
+
+    position: absolute
+    bottom: -80px
+    right: var(--unit)
+
+    @media (max-width: $tab-sm)
+      width: 37vw
+      bottom: -24px
+
+    .image::before
+      --ratio: 60%
+      @media (max-width: $tab-sm)
+        --ratio: 64.3%
+
+// 12
+.case[data-index="12"]
+  padding: 0 var(--unit)
+
+  .text
+    position: absolute
+    top: calc(100% + 16px)
+    right: 0
+    text-align: right
+
+  .image::before
+    --ratio: 147%
+    @media (max-width: $tab-sm)
+      --ratio: 150%
+
+  .image_wrap:nth-child(1)
+    position: relative
+    margin-left: mix(1)
+    width: column-spans(2)
+
+    @media (max-width: $tab-sm)
+      margin: 0 auto
+      width: 56.5vw
+
+// 16
+.case[data-index="16"]
+  .text
+    position: absolute
+    top: calc(100% + 16px)
+    left: 0
+    text-align: left
+
+  .image::before
+    --ratio: 142%
+    @media (max-width: $tab-sm)
+      --ratio: 145%
+
+  .image_wrap:nth-child(1)
+    position: relative
+    margin-left: auto
+    width: mix(2)
+
+    @media (max-width: $tab-sm)
+      width: 59vw

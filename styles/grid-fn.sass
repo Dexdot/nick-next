@@ -1,0 +1,17 @@
+@function minus($fn)
+  @return calc(#{$fn} * -1)
+  
+@function columns($i)
+  @return calc(#{$i} * var(--column-unit))
+
+@function gutters($i)
+  @return calc(#{$i} * var(--gutter-unit))
+
+@function column-spans($i)
+  @return calc(#{$i} * var(--column-and-gutter-unit) - var(--gutter-unit))
+
+@function gutter-spans($i)
+  @return calc(#{$i} * var(--column-and-gutter-unit) - var(--column-unit))
+
+@function mix($columns, $gutters: $columns)
+  @return calc((#{$columns} * var(--column-unit)) + (#{$gutters} * var(--gutter-unit)))
