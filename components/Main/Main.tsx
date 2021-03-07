@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useLocomotiveScroll } from 'react-locomotive-scroll';
+import { InView } from 'react-intersection-observer';
 
 import { Head } from '@/components/Head';
 import { ICasesFields } from '@/contentful/types';
@@ -21,6 +23,65 @@ export function Main({
   cases,
   shouldEnableDarkmode
 }: PropsI): JSX.Element {
+  const { scroll, isReady } = useLocomotiveScroll();
+
+  const [opacity, setOpacity] = useState<number>(1);
+  const [titleText, setTitleText] = useState<string>('');
+  const rects = useRef({});
+
+  const handleFooterVisible = useCallback(
+    (isVisible: boolean, entry: IntersectionObserverEntry) => {
+      const visible = isVisible && entry.intersectionRatio >= 0.3;
+      setOpacity(visible ? 0 : 1);
+    },
+    []
+  );
+
+  const handleIntersect = useCallback(
+    (t: string, isVisible: boolean, entry: IntersectionObserverEntry) => {
+      if (!rects || !rects.current || !isVisible) return;
+
+      const temp = { ...rects.current };
+
+      const nodeRect = entry.target as HTMLElement;
+      const top = nodeRect.offsetTop;
+      const bottom = top + nodeRect.offsetHeight;
+      const rect = { top, bottom };
+
+      temp[t] = { isVisible, rect, title: t };
+      rects.current = { ...temp };
+    },
+    [titleText, rects]
+  );
+
+  const onScroll = useCallback(() => {
+    const { y } = scroll.scroll.instance.scroll;
+    const centerY = y + window.innerHeight / 2;
+    let keys = Object.keys(rects.current);
+    keys = keys.filter((k) => rects.current[k].isVisible);
+
+    keys.forEach((k) => {
+      const v = rects.current[k];
+      const { top, bottom } = v.rect;
+      const isIntersecting = centerY >= top && centerY <= bottom;
+
+      if (isIntersecting) {
+        setTitleText(v.title);
+      }
+    });
+  }, [scroll, rects]);
+
+  useEffect(() => {
+    if (!isReady) return null;
+
+    onScroll();
+    scroll.on('scroll', onScroll);
+    return () => {
+      scroll.off('scroll', onScroll);
+    };
+  }, [isReady]);
+
+  // Darkmode
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,11 +93,28 @@ export function Main({
       <Head title={`${title} | Nick Adams`} />
 
       <div data-scroll-section>
+        <h1 className={cls.fixed_title} style={{ opacity }}>
+          {titleText}
+        </h1>
+
         <div className={cls.container}>
           {cases.slice(0, MAX_CASES_LEN).map((c, i) => (
-            <CasePreview key={c.sys.id} data={c} index={i} />
+            <CasePreview
+              key={c.sys.id}
+              data={c}
+              index={i}
+              onIntersect={handleIntersect}
+            />
           ))}
         </div>
+
+        <InView
+          as="div"
+          onChange={handleFooterVisible}
+          threshold={[0, 0.3, 0.6, 1]}
+        >
+          <div className={cls.footer} />
+        </InView>
       </div>
     </>
   );

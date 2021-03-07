@@ -4,37 +4,69 @@ import { InView } from 'react-intersection-observer';
 import { Entry, Asset } from 'contentful';
 import cn from 'classnames';
 
+import { Spinner } from '@/components/Spinner/Spinner';
 import { ContentfulImage } from '@/components/ContentfulImage';
 import { isImage, isVideo } from '@/utils/utils';
 import { RootState } from '@/store/root-reducer';
-import { Spinner } from '@/components/Spinner/Spinner';
 
 import cls from './Main.module.sass';
 import { CaseLink } from './CaseLink';
+
+const threshold = [
+  0,
+  0.5,
+  0.1,
+  0.15,
+  0.2,
+  0.25,
+  0.3,
+  0.35,
+  0.4,
+  0.45,
+  0.5,
+  0.55,
+  0.6,
+  0.65,
+  0.7,
+  0.75,
+  0.8,
+  0.85,
+  0.9,
+  0.95,
+  1
+];
 
 interface PropsI {
   index: number;
   data: Entry<{
     [fieldId: string]: any;
   }>;
+  onIntersect: (
+    title: string,
+    isVisible: boolean,
+    entry: IntersectionObserverEntry
+  ) => void;
 }
 
-export function CasePreview({ data, index }: PropsI): JSX.Element {
+export function CasePreview({ data, index, onIntersect }: PropsI): JSX.Element {
   const isDarkmode = useSelector((s: RootState) => s.darkmode);
   const [isVisible, setVisible] = useState<boolean>(false);
   const [isLoaded, setLoaded] = useState<boolean>(false);
 
+  // Data
   const fields = useMemo(() => data.fields, [data]);
   const hasText = useMemo<boolean>(() => fields.title || fields.subtitle, [
     fields
   ]);
   const url = useMemo(() => `/case/${fields.slug}`, [fields.slug]);
 
+  // Handlers
   const handleVisible = useCallback(
-    (inView) => {
+    (inView, entry: IntersectionObserverEntry) => {
+      onIntersect(fields.title, inView, entry);
       if (!isVisible) setVisible(inView);
     },
-    [isVisible]
+    [isVisible, fields.title]
   );
 
   const handleLoad = useCallback(() => {
@@ -44,7 +76,7 @@ export function CasePreview({ data, index }: PropsI): JSX.Element {
   }, []);
 
   return (
-    <InView as="div" onChange={handleVisible}>
+    <InView as="div" onChange={handleVisible} threshold={threshold}>
       <div
         data-index={index + 1}
         className={cn(cls.case, {

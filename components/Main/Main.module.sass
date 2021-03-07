@@ -8,6 +8,32 @@
   @media (max-width: $tab-sm)
     padding-top: 224px
 
+.footer
+  min-height: 100vh
+  background: #bdbdbd
+
+.fixed_title
+  font-size: 64px
+  line-height: 100%
+  text-align: center
+  letter-spacing: -0.06em
+  white-space: nowrap
+
+  pointer-events: none
+  transition: opacity 0.2s ease
+
+  z-index: 1
+  position: fixed
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  
+  max-width: 100%
+  display: none
+
+  @media (max-width: $tab-sm)
+    display: block
+
 .case
   position: relative
   display: flex
@@ -39,7 +65,7 @@
     display: block
     width: 100%
     padding-top: var(--ratio)
-    background: #404040
+    background: #bdbdbd
 
   img, video
     position: absolute

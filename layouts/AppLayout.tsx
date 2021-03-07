@@ -11,7 +11,7 @@ import { initCSSProps } from '@/utils/css-props';
 import { initNprogress } from '@/utils/nprogress';
 
 initNprogress();
-const SMOOTH_SCROLL = false;
+const SMOOTH_SCROLL = true;
 
 interface PropsI {
   children: JSX.Element;
@@ -30,7 +30,7 @@ export function AppLayout({ children }: PropsI): JSX.Element {
       <Darkmode>
         <LocomotiveScrollProvider
           containerRef={containerRef}
-          options={{ smooth: SMOOTH_SCROLL }}
+          options={{ smooth: SMOOTH_SCROLL, tablet: { breakpoint: 768 } }}
           watch={[router.pathname]}
         >
           <Header />
