@@ -1,0 +1,42 @@
+$duration: 1.4s
+$stroke-offset: 187
+
+.spinner
+  animation: rotator $duration linear infinite
+
+@keyframes rotator
+  0%
+    transform: rotate(0deg)
+  100%
+    transform: rotate(270deg)
+
+.spinner circle
+  stroke-dasharray: $stroke-offset
+  stroke-dashoffset: 0
+  transform-origin: center
+  animation: dash $duration ease-in-out infinite, colors ($duration * 4) ease-in-out infinite
+
+@keyframes colors
+  0%
+    stroke: var(--color)
+  25%
+    stroke:  var(--color)
+  50%
+    stroke:  var(--color)
+  75%
+    stroke:  var(--color)
+  100%
+    stroke: var(--color)
+
+
+@keyframes dash
+  0%
+    stroke-dashoffset: $stroke-offset
+
+  50%
+    stroke-dashoffset: $stroke-offset / 4
+    transform: rotate(135deg)
+
+  100%
+    stroke-dashoffset: $stroke-offset
+    transform: rotate(450deg)
