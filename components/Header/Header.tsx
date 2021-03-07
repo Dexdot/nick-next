@@ -59,6 +59,16 @@ export function Header(): JSX.Element {
             </Link>
           </div>
 
+          <Link href={isDarkmode ? '/' : 'black'}>
+            <a
+              className={cls.bw_link}
+              href={isDarkmode ? '/' : 'black'}
+              data-dark={isDarkmode}
+            >
+              {isDarkmode ? 'white' : 'black'}
+            </a>
+          </Link>
+
           <MenuButton active={modal.open} onClick={onButtonClick} />
         </div>
       </div>

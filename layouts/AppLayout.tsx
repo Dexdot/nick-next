@@ -8,7 +8,9 @@ import { ScrollReset } from '@/components/ScrollReset';
 import { Header } from '@/components/Header/Header';
 import { Menu } from '@/components/Menu/Menu';
 import { initCSSProps } from '@/utils/css-props';
+import { initNprogress } from '@/utils/nprogress';
 
+initNprogress();
 const SMOOTH_SCROLL = true;
 
 interface PropsI {

@@ -16,8 +16,10 @@
 .button
   transition: opacity 0.25s ease
 
-.logo
+.logo a
   display: flex
+  align-items: center
+  justify-content: center
 
 .hidden
   opacity: 0
@@ -25,13 +27,38 @@
 
 .inner
   display: flex
-  align-items: flex-start
-  justify-content: space-between
+  align-items: center
+
+  @media (max-width: $mob)
+    align-items: flex-start
+
+.bw_link
+  text-align: center
+  font-size: 16px
+  line-height: 23px
+
+  height: 24px
+  padding: 0 12px
+  margin-left: auto
+  margin-right: 12px
+
+  border-radius: 16px
+  transition: 0.2s ease
+  background: #F2F2F2
+  color: #1F2020
+
+  [data-dark]
+    background: rgba(255, 255, 255, 0.1)
+    color: white
+  
 
 .button
   position: relative
-  width: 40px
-  height: 40px
+  width: 12px
+  height: 12px
+
+  @media (max-width: $mob)
+    margin-top: 6px
 
   &:hover
     opacity: 0.3

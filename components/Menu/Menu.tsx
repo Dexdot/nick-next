@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 
@@ -17,6 +17,8 @@ const links = [
 ];
 
 export function Menu(): JSX.Element {
+  const ref = useRef(null);
+
   const modal = useSelector((s: RootState) => s.modal);
   const isOpen = useMemo(() => modal.name === 'menu' && modal.open, [
     modal.name,
@@ -28,9 +30,10 @@ export function Menu(): JSX.Element {
       classNames={{ ...cls }}
       timeout={1000}
       in={isOpen}
+      nodeRef={ref}
       unmountOnExit
     >
-      <section className={cls.container} key="menu">
+      <section className={cls.container} key="menu" ref={ref}>
         <div className={cls.overlay} />
         <nav className={cls.nav}>
           <ul>
