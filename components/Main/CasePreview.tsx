@@ -69,11 +69,11 @@ export function CasePreview({ data, index, onIntersect }: PropsI): JSX.Element {
     [isVisible, fields.title]
   );
 
-  const handleLoad = useCallback(() => {
-    setTimeout(() => {
-      setLoaded(true);
-    }, 100);
-  }, []);
+  // const handleLoad = useCallback(() => {
+  //   setTimeout(() => {
+  //     setLoaded(true);
+  //   }, 100);
+  // }, []);
 
   return (
     <InView as="div" onChange={handleVisible} threshold={threshold}>
@@ -87,40 +87,25 @@ export function CasePreview({ data, index, onIntersect }: PropsI): JSX.Element {
           <React.Fragment key={cover.sys.id}>
             <div className={cls.image_wrap}>
               <div className={cls.image}>
-                {isVisible && (
-                  <CaseLink soon={fields.soon} url={url}>
-                    {!isLoaded && (
-                      <div className={cls.spinner}>
-                        <Spinner />
-                      </div>
+                <CaseLink soon={fields.soon} url={url}>
+                  <span
+                    className={cn(cls.preview_transition, {
+                      [cls.preview_transition_active]: isVisible
+                    })}
+                  >
+                    {isImage(cover) && <ContentfulImage img={cover} />}
+
+                    {isVideo(cover) && (
+                      <video
+                        src={cover.fields.file.url}
+                        autoPlay
+                        playsInline
+                        loop
+                        muted
+                      />
                     )}
-
-                    <span
-                      className={cn(cls.image_opacity, {
-                        [cls.image_opacity_active]: isLoaded
-                      })}
-                    >
-                      {isImage(cover) && (
-                        <ContentfulImage
-                          img={cover}
-                          onLoad={() => i === 0 && handleLoad()}
-                        />
-                      )}
-
-                      {isVideo(cover) && (
-                        <video
-                          src={cover.fields.file.url}
-                          onPlay={() => i === 0 && handleLoad()}
-                          onLoad={() => i === 0 && handleLoad()}
-                          autoPlay
-                          playsInline
-                          loop
-                          muted
-                        />
-                      )}
-                    </span>
-                  </CaseLink>
-                )}
+                  </span>
+                </CaseLink>
               </div>
 
               {i === 0 && hasText && (

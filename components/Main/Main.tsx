@@ -9,6 +9,7 @@ import { disableDarkmode, enableDarkmode } from '@/store/darkmode';
 
 import cls from './Main.module.sass';
 import { CasePreview } from './CasePreview';
+// import { MainLoader } from './MainLoader';
 
 const MAX_CASES_LEN = 16;
 
@@ -23,6 +24,7 @@ export function Main({
   cases,
   shouldEnableDarkmode
 }: PropsI): JSX.Element {
+  // const [pageLoaded, setPageLoaded] = useState<boolean>(false);
   const { scroll, isReady } = useLocomotiveScroll();
 
   const [opacity, setOpacity] = useState<number>(1);
@@ -81,6 +83,20 @@ export function Main({
     };
   }, [isReady]);
 
+  // useEffect(() => {
+  //   const set = () => setPageLoaded(true);
+
+  //   if (pageLoaded) return () => window.removeEventListener('load', set);
+
+  //   if (document.readyState === 'complete') {
+  //     setPageLoaded(true);
+  //     return () => window.removeEventListener('load', set);
+  //   }
+
+  //   window.addEventListener('load', set);
+  //   return () => window.removeEventListener('load', set);
+  // }, [pageLoaded]);
+
   // Darkmode
   const dispatch = useDispatch();
 
@@ -91,6 +107,8 @@ export function Main({
   return (
     <>
       <Head title={`${title} | Nick Adams`} />
+
+      {/* <MainLoader pageLoaded={} /> */}
 
       <div data-scroll-section>
         <h1 className={cls.fixed_title} style={{ opacity }}>
