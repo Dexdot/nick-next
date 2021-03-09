@@ -269,7 +269,7 @@ export interface ICasesFields {
   name: string;
 
   /** list */
-  list: Entry<{ [fieldId: string]: unknown }>[];
+  list: Entry<{ [fieldId: string]: any }>[];
 }
 
 /** Список кейсов */

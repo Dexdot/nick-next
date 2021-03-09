@@ -27,7 +27,7 @@ export function Main({
   const { scroll, isReady } = useLocomotiveScroll();
 
   const [opacity, setOpacity] = useState<number>(1);
-  const [titleText, setTitleText] = useState<string>('');
+  const [titleText, setTitleText] = useState<string>(cases[0].fields.title);
   const rects = useRef({});
 
   const handleFooterVisible = useCallback(
