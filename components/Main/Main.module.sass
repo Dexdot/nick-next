@@ -12,30 +12,33 @@
   min-height: 100vh
   background: #bdbdbd
 
+.fixed_title:not(.fixed_title_desktop)
+  @media (min-width: $tab-sm + 1)
+    display: none
+
+.fixed_title_desktop
+  @media (max-width: $tab-sm)
+    display: none
+
 .fixed_title
-  font-size: 64px
+  +responsive('font-size', (375px: 64px, 1920px: 144px))
   line-height: 100%
   text-align: center
   letter-spacing: -0.06em
   white-space: nowrap
 
-  pointer-events: none
   transition: opacity 0.2s ease
+  pointer-events: none
+  mix-blend-mode: difference
+  color: #fff
+
+  max-width: 100%
 
   z-index: 1
   position: fixed
   top: 50%
   left: 50%
   transform: translate(-50%, -50%)
-  
-  max-width: 100%
-  display: none
-
-  color: #fff
-  mix-blend-mode: difference
-
-  @media (max-width: $tab-sm)
-    display: block
 
 .case
   position: relative

@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocomotiveScroll } from 'react-locomotive-scroll';
 import { InView } from 'react-intersection-observer';
+import cn from 'classnames';
 
 import { Head } from '@/components/Head';
 import { ICasesFields } from '@/contentful/types';
@@ -9,7 +10,6 @@ import { disableDarkmode, enableDarkmode } from '@/store/darkmode';
 
 import cls from './Main.module.sass';
 import { CasePreview } from './CasePreview';
-// import { MainLoader } from './MainLoader';
 
 const MAX_CASES_LEN = 16;
 
@@ -24,7 +24,6 @@ export function Main({
   cases,
   shouldEnableDarkmode
 }: PropsI): JSX.Element {
-  // const [pageLoaded, setPageLoaded] = useState<boolean>(false);
   const { scroll, isReady } = useLocomotiveScroll();
 
   const [opacity, setOpacity] = useState<number>(1);
@@ -58,6 +57,7 @@ export function Main({
 
   const onScroll = useCallback(() => {
     const { y } = scroll.scroll.instance.scroll;
+
     const centerY = y + window.innerHeight / 2;
     let keys = Object.keys(rects.current);
     keys = keys.filter((k) => rects.current[k].isVisible);
@@ -83,20 +83,6 @@ export function Main({
     };
   }, [isReady]);
 
-  // useEffect(() => {
-  //   const set = () => setPageLoaded(true);
-
-  //   if (pageLoaded) return () => window.removeEventListener('load', set);
-
-  //   if (document.readyState === 'complete') {
-  //     setPageLoaded(true);
-  //     return () => window.removeEventListener('load', set);
-  //   }
-
-  //   window.addEventListener('load', set);
-  //   return () => window.removeEventListener('load', set);
-  // }, [pageLoaded]);
-
   // Darkmode
   const dispatch = useDispatch();
 
@@ -108,14 +94,26 @@ export function Main({
     <>
       <Head title={`${title} | Nick Adams`} />
 
-      {/* <MainLoader pageLoaded={} /> */}
+      <h2
+        className={cn(cls.fixed_title, cls.fixed_title_desktop)}
+        style={{
+          opacity
+        }}
+      >
+        {titleText}
+      </h2>
 
       <div data-scroll-section>
-        <h1 className={cls.fixed_title} style={{ opacity }}>
-          {titleText}
-        </h1>
-
         <div className={cls.container}>
+          <h2
+            className={cls.fixed_title}
+            style={{
+              opacity
+            }}
+          >
+            {titleText}
+          </h2>
+
           {cases.slice(0, MAX_CASES_LEN).map((c, i) => (
             <CasePreview
               key={c.sys.id}
