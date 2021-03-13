@@ -12,7 +12,6 @@ const links = [
   { text: 'Index', to: '/' },
   { text: 'About', to: '/about' },
   { text: 'Vision', to: '/vision' },
-  { text: 'Black', to: '/black' },
   { text: 'Journal', to: '/inspire', disabled: true }
 ];
 

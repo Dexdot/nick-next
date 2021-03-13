@@ -25,15 +25,29 @@ export function Main({
   shouldEnableDarkmode
 }: PropsI): JSX.Element {
   const { scroll, isReady } = useLocomotiveScroll();
-
-  const [opacity, setOpacity] = useState<number>(1);
-  const [titleText, setTitleText] = useState<string>(cases[0].fields.title);
   const rects = useRef({});
+
+  // Hover desktop
+  const [caseTitleDesktop, setCaseTitleDesktop] = useState<string>(
+    cases[0].fields.title
+  );
+  const [hoverOpacity, setHoverOpacity] = useState<number>(0);
+  const onMouseEnter = useCallback((c) => {
+    setCaseTitleDesktop(c.fields.title);
+    setHoverOpacity(1);
+  }, []);
+  const onMouseLeave = useCallback(() => {
+    setHoverOpacity(0);
+  }, []);
+
+  // Title
+  const [titleOpacity, setTitleOpacity] = useState<number>(1);
+  const [caseTitle, setCaseTitle] = useState<string>(cases[0].fields.title);
 
   const handleFooterVisible = useCallback(
     (isVisible: boolean, entry: IntersectionObserverEntry) => {
       const visible = isVisible && entry.intersectionRatio >= 0.3;
-      setOpacity(visible ? 0 : 1);
+      setTitleOpacity(visible ? 0 : 1);
     },
     []
   );
@@ -52,7 +66,7 @@ export function Main({
       temp[t] = { isVisible, rect, title: t };
       rects.current = { ...temp };
     },
-    [titleText, rects]
+    [caseTitle, rects]
   );
 
   const onScroll = useCallback(() => {
@@ -68,7 +82,7 @@ export function Main({
       const isIntersecting = centerY >= top && centerY <= bottom;
 
       if (isIntersecting) {
-        setTitleText(v.title);
+        setCaseTitle(v.title);
       }
     });
   }, [scroll, rects]);
@@ -97,10 +111,16 @@ export function Main({
       <h2
         className={cn(cls.fixed_title, cls.fixed_title_desktop)}
         style={{
-          opacity
+          opacity: titleOpacity
         }}
       >
-        {titleText}
+        <span
+          style={{
+            opacity: hoverOpacity
+          }}
+        >
+          {caseTitleDesktop}
+        </span>
       </h2>
 
       <div data-scroll-section>
@@ -108,10 +128,10 @@ export function Main({
           <h2
             className={cls.fixed_title}
             style={{
-              opacity
+              opacity: titleOpacity
             }}
           >
-            {titleText}
+            {caseTitle}
           </h2>
 
           {cases.slice(0, MAX_CASES_LEN).map((c, i) => (
@@ -120,6 +140,8 @@ export function Main({
               data={c}
               index={i}
               onIntersect={handleIntersect}
+              onMouseEnter={onMouseEnter}
+              onMouseLeave={onMouseLeave}
             />
           ))}
         </div>

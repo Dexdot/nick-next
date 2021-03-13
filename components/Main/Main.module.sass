@@ -40,6 +40,9 @@
   left: 50%
   transform: translate(-50%, -50%)
 
+  span
+    transition: opacity .4s cubic-bezier(.455,.03,.515,.955)
+
 .case
   position: relative
   display: flex
@@ -117,9 +120,9 @@
 .text
   display: block
   line-height: 1.2
-  +responsive('font-size', (375px: 18px, 1920px: 24px))
+  +responsive('font-size', (1920px: 20px, 2550px: 24px))
 
-  transition: opacity .5s cubic-bezier(.455,.03,.515,.955)
+  transition: opacity .4s cubic-bezier(.455,.03,.515,.955)
   opacity: 0
 
   @media (max-width: $tab-sm)
@@ -140,7 +143,7 @@
 
 .image_wrap:first-child .image:hover
   img, video
-    transform: scale3d(1.1, 1.1, 1)
+    transform: scale3d(1.05, 1.05, 1)
 
 .case_dark
   .text
@@ -159,7 +162,7 @@
 
   .text
     position: absolute
-    bottom: -80px
+    top: calc(100% + 16px)
     right: 0
     text-align: right
     padding-left: 12vw
@@ -181,7 +184,7 @@
     width: 31.25vw
 
     position: absolute
-    bottom: -80px
+    bottom: -40px
     left: var(--unit)
 
     @media (max-width: $tab-sm)
@@ -389,7 +392,7 @@
 
   .text
     position: absolute
-    bottom: -80px
+    top: calc(100% + 16px)
     left: 0
     text-align: left
 
@@ -409,7 +412,7 @@
     width: 31.25vw
 
     position: absolute
-    bottom: -80px
+    bottom: -40px
     right: var(--unit)
 
     @media (max-width: $tab-sm)

@@ -4,7 +4,6 @@ import { InView } from 'react-intersection-observer';
 import { Entry, Asset } from 'contentful';
 import cn from 'classnames';
 
-import { Spinner } from '@/components/Spinner/Spinner';
 import { ContentfulImage } from '@/components/ContentfulImage';
 import { isImage, isVideo } from '@/utils/utils';
 import { RootState } from '@/store/root-reducer';
@@ -36,22 +35,31 @@ const threshold = [
   1
 ];
 
+type CaseI = Entry<{
+  [fieldId: string]: any;
+}>;
+
 interface PropsI {
   index: number;
-  data: Entry<{
-    [fieldId: string]: any;
-  }>;
+  data: CaseI;
   onIntersect: (
     title: string,
     isVisible: boolean,
     entry: IntersectionObserverEntry
   ) => void;
+  onMouseEnter: (c: CaseI) => void;
+  onMouseLeave: () => void;
 }
 
-export function CasePreview({ data, index, onIntersect }: PropsI): JSX.Element {
+export function CasePreview({
+  data,
+  index,
+  onIntersect,
+  onMouseEnter,
+  onMouseLeave
+}: PropsI): JSX.Element {
   const isDarkmode = useSelector((s: RootState) => s.darkmode);
   const [isVisible, setVisible] = useState<boolean>(false);
-  const [isLoaded, setLoaded] = useState<boolean>(false);
 
   // Data
   const fields = useMemo(() => data.fields, [data]);
@@ -69,11 +77,9 @@ export function CasePreview({ data, index, onIntersect }: PropsI): JSX.Element {
     [isVisible, fields.title]
   );
 
-  // const handleLoad = useCallback(() => {
-  //   setTimeout(() => {
-  //     setLoaded(true);
-  //   }, 100);
-  // }, []);
+  const handleMouseEnter = useCallback(() => {
+    onMouseEnter(data);
+  }, [onMouseEnter]);
 
   return (
     <InView as="div" onChange={handleVisible} threshold={threshold}>
@@ -85,7 +91,11 @@ export function CasePreview({ data, index, onIntersect }: PropsI): JSX.Element {
       >
         {fields.covers.map((cover: Asset, i: number) => (
           <React.Fragment key={cover.sys.id}>
-            <div className={cls.image_wrap}>
+            <div
+              className={cls.image_wrap}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={onMouseLeave}
+            >
               <div className={cls.image}>
                 <CaseLink soon={fields.soon} url={url}>
                   <span
@@ -111,9 +121,6 @@ export function CasePreview({ data, index, onIntersect }: PropsI): JSX.Element {
               {i === 0 && hasText && (
                 <CaseLink soon={fields.soon} url={url}>
                   <span className={cls.text}>
-                    {fields.title && (
-                      <p className={cls.title}>{fields.title}</p>
-                    )}
                     {fields.subtitle && (
                       <p className={cls.subtitle}>{fields.subtitle}</p>
                     )}
