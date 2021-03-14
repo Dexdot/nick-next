@@ -15,7 +15,11 @@ interface PropsI {
 export function CaseStories({ stories, onClick }: PropsI): JSX.Element {
   const interval = useRef(null);
   const [index, setIndex, indexRef] = useRefState<number>(0);
-  const lastIndex = useMemo<number>(() => stories.length - 1, [stories]);
+  const images = useMemo<ICaseFields['stories']>(
+    () => stories.filter((a) => isImage(a)),
+    [stories]
+  );
+  const lastIndex = useMemo<number>(() => images.length - 1, [images]);
 
   const onInterval = useCallback(() => {
     if (indexRef.current === lastIndex) {
@@ -43,13 +47,13 @@ export function CaseStories({ stories, onClick }: PropsI): JSX.Element {
   return (
     <div className={cls.stories}>
       <ul>
-        {stories.map((asset, i) => (
+        {images.map((asset, i) => (
           <li
             key={asset.sys.id}
             style={{ display: index === i ? 'flex' : 'none' }}
           >
             <button type="button" onClick={onClick}>
-              {isImage(asset) && <ContentfulImage img={asset} width="200" />}
+              <ContentfulImage img={asset} width="200" />
             </button>
           </li>
         ))}
