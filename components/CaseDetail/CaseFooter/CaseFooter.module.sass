@@ -1,0 +1,52 @@
+@import "@/styles/breakpoints"
+@import "@/styles/grid-fn"
+@import "@/styles/responsive"
+
+.footer
+  display: flex
+  flex-wrap: wrap
+  +responsive('padding-bottom', ($tab: 48px, 1920px: 240px))
+    
+  @media (max-width: $tab)
+    margin-top: -48px
+    margin-left: -12px
+
+.footer > li
+  @media (min-width: $tab + 1)
+    width: mix(1)
+
+  @media (max-width: $tab)
+    margin-top: 48px
+    margin-left: 12px
+    width: calc(50% - 12px)
+
+.footer_list > li b
+  display: block
+
+.footer_list > li:not(:first-child) b
+  margin-top: 24px
+
+.footer_content_inner
+  margin-top: 24px
+  
+  @media (min-width: $tab + 1)
+    display: none
+
+.footer_content:not(.footer_content_inner)
+  @media (max-width: $tab)
+    display: none
+
+.etalon
+  @media (min-width: $tab + 1)
+    padding-bottom: 48px
+    margin-left: auto
+    width: columns(1)
+
+.etalon a
+  display: flex
+  align-items: center
+  margin-top: 2px
+
+  svg
+    margin-left: 2px
+

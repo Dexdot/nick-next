@@ -1,30 +1,17 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import cn from 'classnames';
-import { Document } from '@contentful/rich-text-types';
 
 import { ICase, ICaseFields } from '@/contentful/types';
-import { RootState } from '@/store/root-reducer';
 import { disableDarkmode } from '@/store/darkmode';
 import { openModal } from '@/store/modal';
 import { setStories } from '@/store/stories';
-import {
-  isBlock,
-  isImageBlock,
-  isNotText,
-  isQuote,
-  isRow,
-  isText,
-  isVideoBlock,
-  renderText
-} from '@/utils/utils';
 
+import cls from '@/components/CaseDetail/CaseDetail.module.sass';
 import { ContentfulImage } from '@/components/ContentfulImage';
 import { CaseStories } from '@/components/CaseDetail/CaseStories/CaseStories';
-import { CaseRow } from '@/components/CaseDetail/CaseRow/CaseRow';
-import { CaseBlock } from '@/components/CaseDetail/CaseBlock/CaseBlock';
-import { CaseQuote } from '@/components/CaseDetail/CaseQuote/CaseQuote';
-import cls from '@/components/CaseDetail/CaseDetail.module.sass';
+import { CaseFooter } from './CaseFooter/CaseFooter';
+import { CaseRich } from './CaseRich';
 
 interface PropsI {
   data: ICase;
@@ -36,7 +23,6 @@ export function CaseDetail({ data }: PropsI): JSX.Element {
     dispatch(disableDarkmode());
   }, []);
 
-  const isDarkmode = useSelector((s: RootState) => s.darkmode);
   const fields = useMemo<ICaseFields>(() => data.fields, [data]);
 
   const hasRoles = useMemo<boolean>(
@@ -61,31 +47,6 @@ export function CaseDetail({ data }: PropsI): JSX.Element {
     dispatch(setStories(payload));
     dispatch(openModal('stories'));
   }, [fields]);
-
-  const richContent = useMemo<Document['content']>(() => {
-    const rich = fields.content.content.filter((block) => {
-      const isParagraph = isText(block);
-
-      const hasInlineEntry = block.content.some(
-        (b) => b.nodeType === 'embedded-entry-inline'
-      );
-
-      const isEmpty =
-        isParagraph &&
-        // @ts-ignore
-        block.content.every((v) => v.value === '');
-
-      return !isEmpty && !hasInlineEntry;
-    });
-
-    const firstBlock = rich.find((block) => isNotText(block));
-    // @ts-ignore
-    if (firstBlock) firstBlock.isFirstBlock = true;
-
-    return rich;
-  }, [fields]);
-
-  console.log(richContent);
 
   return (
     <div>
@@ -112,7 +73,6 @@ export function CaseDetail({ data }: PropsI): JSX.Element {
           <div className={cls.info_left}>
             <p>{fields.date}</p>
           </div>
-
           <div className={cls.info_right}>
             {hasRoles && (
               <>
@@ -124,97 +84,8 @@ export function CaseDetail({ data }: PropsI): JSX.Element {
             <p className={cls.client}>{fields.client}</p>
           </div>
 
-          <ul className={cls.content}>
-            {richContent.map((item, i) => (
-              <li
-                // eslint-disable-next-line
-                key={i}
-                className={cn({
-                  [cls.image_wrap]: isImageBlock(item) || isVideoBlock(item),
-                  [cls.text]: isText(item),
-                  [cls.block]: isNotText(item)
-                })}
-              >
-                {/* @ts-ignore */}
-                {item.isFirstBlock && fields.url && (
-                  <a className={cls.url} href={fields.url}>
-                    <span>{fields.urlText || fields.url}</span>
-                    <svg
-                      width="28"
-                      height="28"
-                      viewBox="0 0 28 28"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M8.16797 19.8332L19.8346 8.1665"
-                        stroke={isDarkmode ? 'white' : 'black'}
-                        strokeWidth="1.4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M8.16797 8.1665H19.8346V19.8332"
-                        stroke={isDarkmode ? 'white' : 'black'}
-                        strokeWidth="1.4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </a>
-                )}
-
-                {/* @ts-ignore */}
-                {item.isFirstBlock && (
-                  <div className={cn(cls.info_right, cls.info_right_inner)}>
-                    {hasRoles && (
-                      <>
-                        {fields.roles.map((role) => (
-                          <p key={role}>{role}</p>
-                        ))}
-                      </>
-                    )}
-                    <p className={cls.client}>{fields.client}</p>
-                  </div>
-                )}
-
-                {isImageBlock(item) && (
-                  <ContentfulImage
-                    className={cls.image}
-                    img={item.data.target}
-                  />
-                )}
-
-                {isVideoBlock(item) && (
-                  <video
-                    className={cls.image}
-                    src={item.data.target.fields.file.url}
-                    autoPlay
-                    playsInline
-                    loop
-                    muted
-                  />
-                )}
-
-                {isText(item) && (
-                  <p
-                    // eslint-disable-next-line
-                    dangerouslySetInnerHTML={{
-                      __html: renderText(item)
-                    }}
-                  />
-                )}
-
-                {isBlock(item) && <CaseBlock data={item.data.target.fields} />}
-
-                {isRow(item) && (
-                  <CaseRow images={item.data.target.fields.images} />
-                )}
-
-                {isQuote(item) && <CaseQuote data={item.data.target.fields} />}
-              </li>
-            ))}
-          </ul>
+          <CaseRich fields={fields} />
+          <CaseFooter fields={fields} />
         </div>
       </article>
     </div>

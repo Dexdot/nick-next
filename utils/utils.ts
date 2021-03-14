@@ -1,8 +1,8 @@
 import { Asset } from 'contentful';
-import { INLINES, TopLevelBlock, Document } from '@contentful/rich-text-types';
+import { INLINES, TopLevelBlock } from '@contentful/rich-text-types';
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 
-const options = {
+const renderOptions = {
   renderNode: {
     [INLINES.HYPERLINK]: ({ data, content }, next) => {
       const targetBlank = data.uri.startsWith('http') ? 'target="_blank"' : '';
@@ -11,7 +11,8 @@ const options = {
   }
 };
 
-export const renderText = (item): string => documentToHtmlString(item, options);
+export const renderText = (item): string =>
+  documentToHtmlString(item, renderOptions);
 
 export const isText = (item: TopLevelBlock): boolean =>
   item.nodeType === 'paragraph';
