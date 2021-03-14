@@ -44,7 +44,7 @@ function encodeParams(data: {
   return params.join('&');
 }
 
-export function getImageUrl(img: Asset): string {
+export function getImageUrl(img: Asset, width?: string): string {
   const { url } = img.fields.file;
   const supports = getSupports();
 
@@ -57,7 +57,7 @@ export function getImageUrl(img: Asset): string {
 
   const params = {
     ...fmfl,
-    w: '',
+    w: width || '',
     fit: supports.isMob ? 'fill' : ''
   };
 

@@ -6,15 +6,16 @@ import { getImageUrl } from '@/utils/utils';
 interface PropsI {
   img: Asset;
   onLoad?: () => void;
+  width?: string;
 }
 
-export function ContentfulImage({ img, onLoad }: PropsI): JSX.Element {
+export function ContentfulImage({ img, onLoad, width }: PropsI): JSX.Element {
   const { scroll } = useLocomotiveScroll();
   const ref = useRef(null);
 
   const load = useCallback(async () => {
     const imgNode = ref.current;
-    const src = getImageUrl(img);
+    const src = getImageUrl(img, width);
 
     const onload = () => {
       if (scroll && scroll.update) scroll.update();
@@ -46,5 +47,6 @@ export function ContentfulImage({ img, onLoad }: PropsI): JSX.Element {
 ContentfulImage.displayName = 'ContentfulImage';
 
 ContentfulImage.defaultProps = {
-  onLoad: undefined
+  onLoad: undefined,
+  width: ''
 };

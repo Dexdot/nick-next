@@ -49,17 +49,7 @@ export function CaseStories({ stories, onClick }: PropsI): JSX.Element {
             style={{ display: index === i ? 'flex' : 'none' }}
           >
             <button type="button" onClick={onClick}>
-              {isImage(asset) && <ContentfulImage img={asset} />}
-
-              {isVideo(asset) && (
-                <video
-                  src={asset.fields.file.url}
-                  playsInline
-                  autoPlay
-                  muted
-                  loop
-                />
-              )}
+              {isImage(asset) && <ContentfulImage img={asset} width="200" />}
             </button>
           </li>
         ))}
