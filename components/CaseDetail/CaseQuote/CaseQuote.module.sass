@@ -1,0 +1,23 @@
+@import "@/styles/breakpoints"
+@import "@/styles/grid-fn"
+  
+.quote
+  padding: 24px 0 24px mix(1)
+  
+  @media (max-width: $tab)
+    padding: 8px 0 32px
+
+.text
+  line-height: 0.88
+  margin-bottom: 56px
+
+  @media (max-width: $tab)
+    margin-bottom: 16px
+
+.info
+  @media (min-width: $tab + 1)
+    margin-left: auto
+    width: column-spans(1)
+
+  @media (max-width: $tab)
+    padding-left: 72px

@@ -10,17 +10,20 @@ import { openModal } from '@/store/modal';
 import { setStories } from '@/store/stories';
 import {
   isBlock,
-  isImage,
   isImageBlock,
   isNotText,
+  isQuote,
+  isRow,
   isText,
-  isVideo,
   isVideoBlock,
   renderText
 } from '@/utils/utils';
 
 import { ContentfulImage } from '@/components/ContentfulImage';
 import { CaseStories } from '@/components/CaseDetail/CaseStories/CaseStories';
+import { CaseRow } from '@/components/CaseDetail/CaseRow/CaseRow';
+import { CaseBlock } from '@/components/CaseDetail/CaseBlock/CaseBlock';
+import { CaseQuote } from '@/components/CaseDetail/CaseQuote/CaseQuote';
 import cls from '@/components/CaseDetail/CaseDetail.module.sass';
 
 interface PropsI {
@@ -129,7 +132,7 @@ export function CaseDetail({ data }: PropsI): JSX.Element {
                 className={cn({
                   [cls.image_wrap]: isImageBlock(item) || isVideoBlock(item),
                   [cls.text]: isText(item),
-                  [cls.block]: isBlock(item)
+                  [cls.block]: isNotText(item)
                 })}
               >
                 {/* @ts-ignore */}
@@ -201,6 +204,14 @@ export function CaseDetail({ data }: PropsI): JSX.Element {
                     }}
                   />
                 )}
+
+                {isBlock(item) && <CaseBlock data={item.data.target.fields} />}
+
+                {isRow(item) && (
+                  <CaseRow images={item.data.target.fields.images} />
+                )}
+
+                {isQuote(item) && <CaseQuote data={item.data.target.fields} />}
               </li>
             ))}
           </ul>

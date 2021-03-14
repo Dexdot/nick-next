@@ -1,0 +1,35 @@
+@import "@/styles/breakpoints"
+@import "@/styles/grid-fn"
+  
+.list
+  display: flex
+
+  @media (min-width: $tab + 1)
+    justify-content: space-between
+
+  @media (max-width: $tab)
+    flex-direction: column
+
+.list > li
+  @media (max-width: $tab)
+    width: 100%
+    
+.list > li:first-child
+  @media (min-width: $tab + 1)
+    width: column-spans(2)
+
+  @media (max-width: $tab)
+    margin-bottom: 8px
+
+.list > li:last-child
+  @media (min-width: $tab + 1)
+    width: column-spans(3)
+
+.list
+  img,
+  video
+    display: block
+    max-width: 100%
+    width: 100%
+    height: auto
+

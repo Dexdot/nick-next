@@ -1,0 +1,33 @@
+@import "@/styles/breakpoints"
+@import "@/styles/grid-fn"
+
+.block
+  position: relative
+
+.image
+  @media (min-width: $tab + 1)
+    margin-left: mix(var(--offset))
+    width: column-spans(var(--width))
+
+  @media (max-width: $tab)
+    margin-bottom: 8px
+
+  img, video
+    display: block
+    width: 100%
+    height: auto
+
+.text
+  @media (min-width: $tab + 1)
+    position: absolute
+    top: 0
+    left: mix(var(--offset))
+    width: column-spans(var(--width))
+
+.text1
+  @media (max-width: $tab)
+    margin-bottom: 16px
+
+.text2
+  @media (max-width: $tab)
+    margin-bottom: 32px
