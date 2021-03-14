@@ -21,6 +21,7 @@
     "gentypes": "contentful-typescript-codegen --output contentful/types.ts"
   },
   "dependencies": {
+    "@contentful/rich-text-html-renderer": "^14.1.2",
     "@contentful/rich-text-types": "^14.1.2",
     "@moxy/next-layout": "^2.2.2",
     "@reduxjs/toolkit": "^1.5.0",

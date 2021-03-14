@@ -6,10 +6,16 @@ import { getImageUrl } from '@/utils/utils';
 interface PropsI {
   img: Asset;
   onLoad?: () => void;
+  className?: string;
   width?: string;
 }
 
-export function ContentfulImage({ img, onLoad, width }: PropsI): JSX.Element {
+export function ContentfulImage({
+  img,
+  onLoad,
+  width,
+  className
+}: PropsI): JSX.Element {
   const { scroll } = useLocomotiveScroll();
   const ref = useRef(null);
 
@@ -41,12 +47,13 @@ export function ContentfulImage({ img, onLoad, width }: PropsI): JSX.Element {
   }, [ref]);
 
   // eslint-disable-next-line
-  return <img ref={ref} />;
+  return <img className={className} ref={ref} />;
 }
 
 ContentfulImage.displayName = 'ContentfulImage';
 
 ContentfulImage.defaultProps = {
   onLoad: undefined,
+  className: '',
   width: ''
 };

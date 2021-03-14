@@ -1,15 +1,24 @@
 @import "@/styles/breakpoints"
+@import "@/styles/grid-fn"
 @import "@/styles/responsive"
 
 .wrapper
   +responsive('padding-top', (375px: 168px, 1920px: 260px))
-
-.title
-  padding: 0 var(--unit)
+  padding-left: var(--unit)
+  padding-right: var(--unit)
 
 .title_right
   text-align: right
   margin-bottom: 24px
+
+.subtitle
+  margin-bottom: 80px
+
+  @media (min-width: $tab + 1)
+    max-width: mix(4)
+
+  @media (max-width: $tab)
+    margin-bottom: 16px
 
 .image
   width: 100vw
@@ -24,6 +33,9 @@
     width: 100%
     height: auto
 
+.image_wrap:last-child .image
+  margin-bottom: 0
+
 .cover
   position: relative
   
@@ -31,3 +43,64 @@
     @media (max-width: $tab)
       height: 100vh
       object-fit: cover
+
+.container
+  position: relative
+
+.info_left
+  @media (min-width: $tab + 1)
+    float: left
+
+  @media (max-width: $tab)
+    margin-bottom: 40px
+
+.info_right
+  @media (min-width: $tab + 1)
+    width: columns(1)
+    float: right
+
+.info_right:not(.info_right_inner)
+  @media (max-width: $tab)
+    display: none
+
+.info_right_inner
+  margin-bottom: 40px
+
+  @media (min-width: $tab + 1)
+    display: none
+
+.client
+  display: block
+  &:not(:first-child)
+    margin-top: 24px
+
+.url
+  display: inline-flex
+  align-items: center
+  margin: 24px 0 160px mix(1)
+
+  @media (max-width: $tab)
+    margin: 0 0 24px
+
+  svg
+    margin-left: 2px
+
+.content
+  margin-bottom: 24px
+
+.text
+  @media (min-width: $tab + 1)
+    max-width: column-spans(2)
+    margin: 0 0 24px mix(1)
+
+  @media (max-width: $tab)
+    margin-bottom: 24px
+
+.block:not(:last-child)
+  margin-bottom: 24px
+
+  @media (max-width: $tab)
+    margin-bottom: 8px
+
+
+
