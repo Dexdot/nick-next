@@ -7,6 +7,7 @@ import { Darkmode } from '@/components/Darkmode/Darkmode';
 import { ScrollReset } from '@/components/ScrollReset';
 import { Header } from '@/components/Header/Header';
 import { Menu } from '@/components/Menu/Menu';
+import { Stories } from '@/components/Stories/Stories';
 import { initCSSProps } from '@/utils/css-props';
 import { initNprogress } from '@/utils/nprogress';
 
@@ -42,6 +43,7 @@ export function AppLayout({ children }: PropsI): JSX.Element {
           </ScrollReset>
 
           <Menu />
+          <Stories />
         </LocomotiveScrollProvider>
       </Darkmode>
     </div>

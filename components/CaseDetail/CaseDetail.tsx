@@ -1,11 +1,13 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import cn from 'classnames';
 
 import { ICase, ICaseFields } from '@/contentful/types';
 import { disableDarkmode } from '@/store/darkmode';
-import { ContentfulImage } from '@/components/ContentfulImage';
+import { openModal } from '@/store/modal';
+import { setStories } from '@/store/stories';
 
+import { ContentfulImage } from '@/components/ContentfulImage';
 import { CaseStories } from '@/components/CaseDetail/CaseStories/CaseStories';
 import cls from '@/components/CaseDetail/CaseDetail.module.sass';
 
@@ -15,15 +17,30 @@ interface PropsI {
 
 export function CaseDetail({ data }: PropsI): JSX.Element {
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(disableDarkmode());
+  }, []);
+
   const fields = useMemo<ICaseFields>(() => data.fields, [data]);
+
+  // Stories
   const hasStories = useMemo<boolean>(
     () => fields.stories && fields.stories.length > 1,
     [fields]
   );
 
-  useEffect(() => {
-    dispatch(disableDarkmode());
-  }, []);
+  const onStoriesClick = useCallback(() => {
+    const { stories, title, date, etalon } = fields;
+    const payload = {
+      title,
+      list: stories,
+      subtitle: date,
+      url: etalon
+    };
+
+    dispatch(setStories(payload));
+    dispatch(openModal('stories'));
+  }, [fields]);
 
   return (
     <div className={cls.wrapper}>
@@ -40,10 +57,7 @@ export function CaseDetail({ data }: PropsI): JSX.Element {
           <ContentfulImage img={fields.cover} />
 
           {hasStories && (
-            <CaseStories
-              stories={fields.stories}
-              onClick={() => console.log('show stories')}
-            />
+            <CaseStories stories={fields.stories} onClick={onStoriesClick} />
           )}
         </div>
       </article>
