@@ -59,10 +59,10 @@ export function Header(): JSX.Element {
             </Link>
           </div>
 
-          <Link href={isDarkmode ? '/' : 'black'}>
+          <Link href={isDarkmode ? '/' : '/black'}>
             <a
               className={cls.bw_link}
-              href={isDarkmode ? '/' : 'black'}
+              href={isDarkmode ? '/' : '/black'}
               data-dark={isDarkmode}
             >
               {isDarkmode ? 'white' : 'black'}

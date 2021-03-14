@@ -1,0 +1,33 @@
+@import "@/styles/breakpoints"
+@import "@/styles/responsive"
+
+.wrapper
+  +responsive('padding-top', (375px: 168px, 1920px: 260px))
+
+.title
+  padding: 0 var(--unit)
+
+.title_right
+  text-align: right
+  margin-bottom: 24px
+
+.image
+  width: 100vw
+  margin-left: minus(var(--unit))
+  margin-bottom: 24px
+
+  @media (max-width: $tab)
+    margin-bottom: 8px
+  
+  > img
+    display: block
+    width: 100%
+    height: auto
+
+.cover
+  position: relative
+  
+  > img
+    @media (max-width: $tab)
+      height: 100vh
+      object-fit: cover

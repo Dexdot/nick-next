@@ -12,7 +12,9 @@ import { client } from '@/contentful/client';
 import { ICase } from '@/contentful/types';
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const entry = await client.getEntries({ content_type: 'case' });
+  const entry = await client.getEntries({
+    content_type: 'case'
+  });
   const cases = entry.items as ICase[];
   const paths = cases
     .filter((c) => !c.fields.soon)
