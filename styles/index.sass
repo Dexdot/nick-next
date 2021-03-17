@@ -4,7 +4,41 @@
 @import "fonts"
 @import "typo"
 @import "grid"
+@import "grid-fn"
 
 body.no-scroll,
 [data-scroll-section]
   overflow: hidden
+
+
+.somelist
+  display: flex
+  flex-wrap: wrap
+  margin-top: -16px
+  margin-left: minus(gutters(1))
+  > div
+    background: #ddd
+    
+    display: flex
+    align-items: center
+    justify-content: center
+    margin-top: 16px
+    margin-left: gutters(1)
+
+    &:nth-child(4)
+      height: 500px
+      width: column-spans(3)
+
+    &:nth-child(5)
+      height: 500px
+      width: column-spans(2)
+
+    &:nth-child(1)
+      height: 700px
+      width: column-spans(5)
+
+    &:nth-child(2),
+    &:nth-child(3)
+      height: 400px
+      width: column-spans(2.5)
+  

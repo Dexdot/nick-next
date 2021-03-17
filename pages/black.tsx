@@ -1,26 +1,17 @@
 import React from 'react';
-import { InferGetStaticPropsType } from 'next';
 
-import { Main } from '@/components/Main/Main';
-import { client } from '@/contentful/client';
-import { ICasesFields } from '@/contentful/types';
-
-export const getStaticProps = async () => {
-  const entry = await client.getEntry(process.env.CTFL_BLACK_CASES_ID);
-  const fields = entry.fields as ICasesFields;
-  const cases = fields.list;
-
-  return {
-    props: {
-      cases,
-      revalidate: 10,
-      fallback: true
-    }
-  };
-};
-
-export default function Black({
-  cases
-}: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
-  return <Main title="Black" cases={cases} shouldEnableDarkmode />;
+export default function Black(): JSX.Element {
+  return (
+    <div className="container">
+      <div style={{ padding: '20vh 0' }}>
+        <div className="somelist">
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>4</div>
+          <div>5</div>
+        </div>
+      </div>
+    </div>
+  );
 }
