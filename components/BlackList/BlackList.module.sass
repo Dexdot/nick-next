@@ -28,22 +28,7 @@ $pattern-length: 11
     @media (min-width: $bp + 1)
       margin-left: gutters(1)
       margin-top: gutters(1)
-      width: column-spans(5)
-
-    &:nth-child(#{$pattern-length}n + 2),
-    &:nth-child(#{$pattern-length}n + 3),
-    &:nth-child(#{$pattern-length}n + 6),
-    &:nth-child(#{$pattern-length}n + 7)
-      @media (min-width: $bp + 1)
-        width: column-spans(2.5)
-
-    &:nth-child(#{$pattern-length}n + 10)
-      @media (min-width: $bp + 1)
-        width: column-spans(3)
-
-    &:nth-child(#{$pattern-length}n + 11)
-      @media (min-width: $bp + 1)
-        width: column-spans(2)
+      width: column-spans(var(--width))
 
 .asset
   display: block

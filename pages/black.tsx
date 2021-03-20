@@ -1,18 +1,17 @@
 import React from 'react';
 import type { GetStaticProps, InferGetStaticPropsType } from 'next';
-import type { IMediaListFields } from '@/contentful/types';
+import type { IBlackListFields } from '@/contentful/types';
 import { client } from '@/contentful/client';
 
 import { BlackList } from '@/components/BlackList/BlackList';
 
 export const getStaticProps: GetStaticProps = async () => {
   const entry = await client.getEntry(process.env.CTFL_BLACK_MEDIA_ID);
-  const inner = entry.fields as IMediaListFields;
-  const list = inner.media;
+  const field = entry.fields as IBlackListFields;
 
   return {
     props: {
-      list,
+      list: field.list,
       revalidate: 10,
       fallback: true
     }

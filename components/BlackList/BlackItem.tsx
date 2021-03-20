@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import type { Asset } from 'contentful';
 import { InView } from 'react-intersection-observer';
 import cn from 'classnames';
@@ -51,7 +51,11 @@ export function BlackItem({ asset }: PropsI): JSX.Element {
     <InView as="div" onChange={handleVisible}>
       <div
         className={cls.asset}
-        style={{ '--ratio': `${ratio}%` } as React.CSSProperties}
+        style={
+          {
+            '--ratio': `${ratio}%`
+          } as React.CSSProperties
+        }
       >
         {isVisible && (
           <>

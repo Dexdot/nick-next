@@ -39,6 +39,57 @@ export interface IAbout extends Entry<IAboutFields> {
   };
 }
 
+export interface IBlackAssetFields {
+  /** asset */
+  asset: Asset;
+
+  /** width */
+  width: number;
+}
+
+/** Картинка/видео для раздела Black */
+
+export interface IBlackAsset extends Entry<IBlackAssetFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'blackAsset';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
+export interface IBlackListFields {
+  /** list */
+  list: IBlackAsset[];
+}
+
+/** Список ассетов для раздела Black */
+
+export interface IBlackList extends Entry<IBlackListFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'blackList';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
 export interface IBoxFields {
   /** name */
   name: string;
@@ -237,14 +288,6 @@ export interface ICaseQuote extends Entry<ICaseQuoteFields> {
       };
     };
   };
-}
-
-export interface IMediaListFields {
-  /** name */
-  name: string;
-
-  /** media */
-  media: Asset[];
 }
 
 export interface ICaseRowFields {
@@ -497,6 +540,8 @@ export interface IWideslider extends Entry<IWidesliderFields> {
 
 export type CONTENT_TYPE =
   | 'about'
+  | 'blackAsset'
+  | 'blackList'
   | 'box'
   | 'case'
   | 'caseBlock'
