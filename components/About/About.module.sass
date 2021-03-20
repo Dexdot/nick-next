@@ -1,0 +1,85 @@
+@import "@/styles/breakpoints"
+@import "@/styles/grid-fn"
+
+.container
+  min-height: 100vh
+  padding-top: 8px
+
+  color: rgba(#fff, 0.6)
+
+  @media (max-width: $tab-sm)
+    padding: 32px 0 24px
+
+  a
+    opacity: 0.6
+    transition: opacity 0.25s ease
+
+    &:hover
+      opacity: 1
+
+.date
+  --delay: 0.8s
+
+  position: absolute
+  left: var(--unit)
+  top: calc(3.75vw * 4.5)
+  transform: translateY(-50%)
+
+  @media (max-width: $tab-sm)
+    font-size: 18px
+    width: 2.5em
+
+    top: 100%
+    transform: translateY(-100%)
+
+.text_wrap
+  position: relative
+  margin-bottom: 160px
+
+  @media (max-width: $tab) and (min-width: $tab-sm + 1)
+    margin-bottom: 80px
+
+  @media (max-width: $tab-sm)
+    margin-bottom: 40px
+
+.text
+  padding: 0 var(--unit)
+
+.text u 
+  text-decoration: none
+  -webkit-text-stroke-width: 1px
+  -webkit-text-stroke-color: rgba(#fff, 0.6)
+
+  &,
+  &:visited,
+  &:active,
+  &:focus
+    color: transparent
+
+.text_mob
+  @media (min-width: $tab-sm + 1)
+    display: none
+
+  p:nth-child(n + 3)
+    padding-left: 80px
+
+.text_desktop
+  @media (max-width: $tab-sm)
+    display: none
+
+  p:nth-child(1)
+    max-width: 22.9em
+
+  p:not(:nth-child(1))
+    padding-left: mix(1)
+
+  p:nth-child(n + 3)
+    padding-right: mix(1)
+
+.text p
+  letter-spacing: -0.04em
+  line-height: 0.96
+  font-size: 3.75vw
+
+  @media (max-width: $tab-sm)
+    font-size: 6.3vw

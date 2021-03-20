@@ -118,7 +118,7 @@ export function Main({ title, cases }: PropsI): JSX.Element {
         </span>
       </h2>
 
-      <div data-scroll-section>
+      <section data-scroll-section>
         <div className={cls.container}>
           <h2
             className={cls.fixed_title}
@@ -148,7 +148,7 @@ export function Main({ title, cases }: PropsI): JSX.Element {
         >
           <div className={cls.footer} />
         </InView>
-      </div>
+      </section>
     </>
   );
 }

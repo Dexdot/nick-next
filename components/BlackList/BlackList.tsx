@@ -20,7 +20,7 @@ export function BlackList({ list }: PropsI): JSX.Element {
   }, []);
 
   return (
-    <div className="container">
+    <section className="container">
       <ul className={cls.list}>
         {list.map((asset) => (
           <li
@@ -33,6 +33,6 @@ export function BlackList({ list }: PropsI): JSX.Element {
           </li>
         ))}
       </ul>
-    </div>
+    </section>
   );
 }

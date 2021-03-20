@@ -1,4 +1,5 @@
-import type { Asset } from 'contentful';
+import cloneDeep from 'lodash.clonedeep';
+import type { Asset, RichTextContent } from 'contentful';
 import { INLINES, TopLevelBlock } from '@contentful/rich-text-types';
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 
@@ -103,4 +104,50 @@ export function getImageUrl(img: Asset, width?: string): string {
   };
 
   return `${url}?${encodeParams(params)}`;
+}
+
+function hasUnderlineMark(el: RichTextContent): boolean {
+  const isTextType = el.nodeType === 'text';
+  const mark = el.marks[0];
+
+  if (!isTextType || !mark) return false;
+
+  return mark.type === 'underline';
+}
+
+export function createMobileAboutText(
+  content: TopLevelBlock[]
+): TopLevelBlock[] {
+  let textIndex: number;
+  let contentItemIndex: number;
+  let underlinedItem;
+
+  const textContent = cloneDeep([...content]);
+
+  textContent.forEach((text, i) => {
+    text.content.forEach((item, j) => {
+      // @ts-ignore
+      if (hasUnderlineMark(item)) {
+        underlinedItem = { ...item };
+        textIndex = i;
+        contentItemIndex = j;
+      }
+    });
+  });
+
+  if (underlinedItem) {
+    const textArray = [...textContent];
+
+    textArray[textIndex].content.splice(contentItemIndex, 1);
+    textArray.unshift({
+      data: {},
+      content: [underlinedItem],
+      // @ts-ignore
+      nodeType: 'paragraph'
+    });
+
+    return textArray;
+  }
+
+  return [...textContent];
 }
