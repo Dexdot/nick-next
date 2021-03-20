@@ -1,5 +1,5 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
-import { Asset } from 'contentful';
+import type { Asset } from 'contentful';
 
 // Interface
 export interface StoriesI {

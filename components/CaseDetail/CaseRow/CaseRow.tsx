@@ -1,5 +1,5 @@
 import React from 'react';
-import { Asset } from 'contentful';
+import type { Asset } from 'contentful';
 
 import { ContentfulImage } from '@/components/ContentfulImage';
 import { isImage, isVideo } from '@/utils/utils';

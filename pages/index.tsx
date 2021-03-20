@@ -1,11 +1,11 @@
 import React from 'react';
-import { InferGetStaticPropsType } from 'next';
+import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 
 import { Main } from '@/components/Main/Main';
 import { client } from '@/contentful/client';
 import { ICasesFields } from '@/contentful/types';
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const entry = await client.getEntry(process.env.CTFL_MAIN_CASES_ID);
   const fields = entry.fields as ICasesFields;
   const cases = fields.list;

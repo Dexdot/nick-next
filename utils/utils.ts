@@ -1,4 +1,4 @@
-import { Asset } from 'contentful';
+import type { Asset } from 'contentful';
 import { INLINES, TopLevelBlock } from '@contentful/rich-text-types';
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 

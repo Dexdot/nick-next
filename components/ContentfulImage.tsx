@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useEffect } from 'react';
-import { Asset } from 'contentful';
+import type { Asset } from 'contentful';
 import { useLocomotiveScroll } from 'react-locomotive-scroll';
 import { getImageUrl } from '@/utils/utils';
 

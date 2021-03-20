@@ -1,0 +1,83 @@
+@import "@/styles/responsive"
+@import "@/styles/breakpoints"
+@import "@/styles/grid-fn"
+
+$bp: $mob
+$pattern-length: 11
+
+.list
+  display: flex
+  flex-wrap: wrap
+
+  +responsive('padding-top', (375px: 120px, 1920px: 200px))
+  +responsive('padding-bottom', (375px: 120px, 1920px: 200px))
+
+  margin-left: minus(gutters(1))
+  margin-top: minus(gutters(1))
+
+  @media (max-width: $bp)
+    margin-left: minus(var(--unit))
+    margin-top: minus(var(--unit))
+
+  > li
+    @media (max-width: $bp)
+      width: 100%
+      margin-left: var(--unit)
+      margin-top: var(--unit)
+
+    @media (min-width: $bp + 1)
+      margin-left: gutters(1)
+      margin-top: gutters(1)
+      width: column-spans(5)
+
+    &:nth-child(#{$pattern-length}n + 2),
+    &:nth-child(#{$pattern-length}n + 3),
+    &:nth-child(#{$pattern-length}n + 6),
+    &:nth-child(#{$pattern-length}n + 7)
+      @media (min-width: $bp + 1)
+        width: column-spans(2.5)
+
+    &:nth-child(#{$pattern-length}n + 10)
+      @media (min-width: $bp + 1)
+        width: column-spans(3)
+
+    &:nth-child(#{$pattern-length}n + 11)
+      @media (min-width: $bp + 1)
+        width: column-spans(2)
+
+.asset
+  display: block
+  width: 100%
+  position: relative
+
+  &::before
+    content: ''
+    display: block
+    width: 100%
+    padding-top: var(--ratio)
+    background: #ddd
+
+  img,
+  video
+    position: absolute
+    top: 0
+    left: 0
+
+    display: block
+    width: 100%
+    height: 100%
+    object-fit: cover
+
+.spinner
+  z-index: 1
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+
+.image_opacity
+  opacity: 0
+  transition: opacity 0.3s ease
+
+.image_opacity_active
+  opacity: 1

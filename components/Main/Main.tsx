@@ -6,7 +6,7 @@ import cn from 'classnames';
 
 import { Head } from '@/components/Head';
 import { ICasesFields } from '@/contentful/types';
-import { disableDarkmode, enableDarkmode } from '@/store/darkmode';
+import { disableDarkmode } from '@/store/darkmode';
 
 import cls from './Main.module.sass';
 import { CasePreview } from './CasePreview';
@@ -16,14 +16,9 @@ const MAX_CASES_LEN = 16;
 interface PropsI {
   cases: ICasesFields['list'];
   title: string;
-  shouldEnableDarkmode?: boolean;
 }
 
-export function Main({
-  title,
-  cases,
-  shouldEnableDarkmode
-}: PropsI): JSX.Element {
+export function Main({ title, cases }: PropsI): JSX.Element {
   const { scroll, isReady } = useLocomotiveScroll();
   const rects = useRef({});
 
@@ -101,8 +96,8 @@ export function Main({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(shouldEnableDarkmode ? enableDarkmode() : disableDarkmode());
-  }, [shouldEnableDarkmode]);
+    dispatch(disableDarkmode());
+  }, []);
 
   return (
     <>
@@ -159,7 +154,3 @@ export function Main({
 }
 
 Main.displayName = 'Main';
-
-Main.defaultProps = {
-  shouldEnableDarkmode: false
-};

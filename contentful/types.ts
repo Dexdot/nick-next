@@ -239,6 +239,14 @@ export interface ICaseQuote extends Entry<ICaseQuoteFields> {
   };
 }
 
+export interface IMediaListFields {
+  /** name */
+  name: string;
+
+  /** media */
+  media: Asset[];
+}
+
 export interface ICaseRowFields {
   /** name */
   name: string;
