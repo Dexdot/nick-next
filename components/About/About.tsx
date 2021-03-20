@@ -3,9 +3,11 @@ import { useDispatch } from 'react-redux';
 import cn from 'classnames';
 import type { TopLevelBlock } from '@contentful/rich-text-types';
 
-import { enableDarkmode } from '@/store/darkmode';
 import type { IAboutFields } from '@/contentful/types';
-import { isText, renderText } from '@/utils/utils';
+import { isImage, isText, isVideo, renderText } from '@/utils/utils';
+import { enableDarkmode } from '@/store/darkmode';
+import { openModal } from '@/store/modal';
+import { ContentfulImage } from '@/components/ContentfulImage';
 
 import cls from './About.module.sass';
 
@@ -91,7 +93,10 @@ export function About({ data, mobileText }: PropsI): JSX.Element {
     splitText();
   }, []);
 
-  console.log(data, mobileText);
+  // Credits button
+  const openCredits = useCallback(() => {
+    dispatch(openModal('credits'));
+  }, []);
 
   return (
     <section>
@@ -141,6 +146,111 @@ export function About({ data, mobileText }: PropsI): JSX.Element {
             ))}
           </div>
         </article>
+
+        <ul className={cls.images}>
+          {data.mediaList.slice(0, 2).map((asset, i) => (
+            <li key={asset.sys.id}>
+              <figure
+                className={cls.image}
+                style={
+                  { '--delay': `${(i + 1) * 0.1}s` } as React.CSSProperties
+                }
+              >
+                {isImage(asset) && <ContentfulImage img={asset} />}
+
+                {isVideo(asset) && (
+                  <video
+                    src={asset.fields.file.url}
+                    autoPlay
+                    playsInline
+                    loop
+                    muted
+                  />
+                )}
+              </figure>
+            </li>
+          ))}
+        </ul>
+
+        <div className={cls.info}>
+          {data.mediaBig && (
+            <figure className={cls.info_img}>
+              {isImage(data.mediaBig) && (
+                <ContentfulImage img={data.mediaBig} />
+              )}
+
+              {isVideo(data.mediaBig) && (
+                <video
+                  src={data.mediaBig.fields.file.url}
+                  autoPlay
+                  playsInline
+                  loop
+                  muted
+                />
+              )}
+            </figure>
+          )}
+
+          <div className={cls.contact}>
+            <ul>
+              <li style={{ '--delay': `0.05s` } as React.CSSProperties}>
+                <a href={`mailto:${data.email}`}>{data.email}</a>
+              </li>
+              <li style={{ '--delay': `0.01s` } as React.CSSProperties}>
+                {data.postAddress}
+              </li>
+              <li style={{ '--delay': `0.15s` } as React.CSSProperties}>
+                Saint Petersburg
+              </li>
+              <li style={{ '--delay': `0.2s` } as React.CSSProperties}>
+                Russia
+              </li>
+            </ul>
+
+            <ul className={cls.social}>
+              <li style={{ '--delay': `0.25s` } as React.CSSProperties}>
+                <a
+                  href="https://behance.net/stereocage"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  behance
+                </a>
+              </li>
+              <li style={{ '--delay': `0.3s` } as React.CSSProperties}>
+                <a
+                  href="https://dribbble.com/stereocage"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  dribbble
+                </a>
+              </li>
+              <li style={{ '--delay': `0.35s` } as React.CSSProperties}>
+                <a
+                  href="https://instagram.com/stereocage"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  instagram
+                </a>
+              </li>
+              <li style={{ '--delay': `0.4s` } as React.CSSProperties}>
+                <a
+                  href="https://facebook.com/stereocage"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  facebook
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <button className={cls.credits} type="button" onClick={openCredits}>
+            Credits
+          </button>
+        </div>
       </div>
     </section>
   );

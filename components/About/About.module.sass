@@ -11,12 +11,20 @@
     padding: 32px 0 24px
 
   a
+    &,
+    &:visited,
+    &:active,
+    &:focus
+      color: #fff
+
+  a
     opacity: 0.6
     transition: opacity 0.25s ease
 
     &:hover
       opacity: 1
 
+// Text
 .date
   --delay: 0.8s
 
@@ -83,3 +91,138 @@
 
   @media (max-width: $tab-sm)
     font-size: 6.3vw
+
+// Images
+.images
+  display: flex
+  padding: 0 var(--unit) 0 calc(#{var(--unit)} + #{mix(1)})
+  margin-bottom: gutters(1)
+
+  @media (max-width: $tab-sm)
+    padding: 0 var(--unit) 0 calc(#{var(--unit)} + 80px)
+    flex-direction: column
+    margin-bottom: 8px
+
+  li:nth-child(1)
+    width: columns(1)
+
+    @media (max-width: $tab-sm)
+      margin-bottom: 8px
+      width: 100%
+
+    .image::before
+      padding-top: 180.2%
+
+      @media (max-width: $tab-sm)
+        padding-top: 152%
+
+  li:nth-child(2)
+    margin-left: gutters(1)
+    width: column-spans(3)
+
+    @media (max-width: $tab-sm)
+      margin: 0
+      width: 100%
+
+    .image::before
+      padding-top: 57.45%
+
+      @media (max-width: $tab-sm)
+        padding-top: 65.94%
+
+.image
+  width: 100%
+  position: relative
+
+  &::before
+    content: ''
+    display: block
+    width: 100%
+
+  img, video
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    object-fit: cover
+
+// Info
+.info
+  display: flex
+  position: relative
+
+  @media (min-width: $tab-sm + 1)
+    padding-bottom: 48px
+    align-items: flex-end
+
+  @media (max-width: $tab-sm)
+    flex-direction: column
+    align-items: flex-start
+
+.info_img
+  position: relative
+
+  @media (min-width: $tab-sm + 1)
+    min-width: calc(#{var(--unit)} + #{column-spans(3)})
+    width: calc(#{var(--unit)} + #{column-spans(3)})
+    
+  @media (max-width: $tab-sm)
+    margin-bottom: 24px
+    width: calc(100% - #{var(--unit)})
+
+  &::before
+    content: ''
+    display: block
+    width: 100%
+    padding-top: 56.25%
+
+  img, video
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    object-fit: cover
+
+// Contact
+.contact
+  @media (min-width: $tab-sm + 1)
+    margin-left: auto
+
+  @media (max-width: $tab-sm)
+    margin: 0 0 24px var(--unit)
+
+  @media (min-width: 1401px)
+    min-width: column-spans(1)
+    width: column-spans(1)
+
+  @media (max-width: 1400px) and (min-width: $tab-sm + 1)
+    margin-right: var(--unit)
+
+
+// Credits
+.credits
+  z-index: 1
+
+  @media (min-width: $tab-sm + 1)
+    position: absolute
+    bottom: 0
+    left: calc(#{var(--unit)} + #{column-spans(3)})
+    transform: translateX(-100%)
+
+  @media (max-width: $tab-sm)
+    margin: 0 var(--unit) 0 auto
+
+
+// Social
+.social
+  padding-top: 24px
+
+  @media (max-width: $tab-sm)
+    font-size: 18px
+
+.social a
+  transition: .4s cubic-bezier(.25,.1,.25,1)
+  &:hover
+    opacity: 1

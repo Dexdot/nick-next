@@ -1,0 +1,128 @@
+@import "@/styles/breakpoints"
+@import "@/styles/responsive"
+
+/* ENTER */
+.enter
+  pointer-events: none
+
+  .nav li
+    opacity: 0
+    transform: translateY(16px)
+
+  .overlay
+    transform: translateY(101%)
+
+
+.enterActive
+  pointer-events: auto
+
+  .overlay,
+  .nav li
+    opacity: 1
+    transform: translateY(0%)
+
+
+.enterActive
+  transition: 1s ease-in-out
+
+  .overlay
+    transition: 0.8s cubic-bezier(0.645, 0.045, 0.355, 1)
+
+@for $i from 1 through 3
+  .enterActive .nav li:nth-child(#{$i})
+    transition: 0.4s ease (#{$i*0.05s + 0.4s})
+
+
+/* EXIT */
+.exit
+  pointer-events: auto
+
+  .nav li
+    opacity: 1
+
+  .nav li,
+  .overlay
+    transform: translateY(0%)
+
+.exitActive
+  pointer-events: none
+
+  .nav li
+    opacity: 0
+
+  .overlay
+    transform: translateY(101%)
+
+.exitActive
+  transition: 1s ease-in-out
+
+  .overlay
+    transition: 0.8s cubic-bezier(0.645, 0.045, 0.355, 1)
+
+@for $i from 1 through 3
+  .exitActive .nav li:nth-child(#{$i})
+    transition: 0.4s ease (#{$i*0.05s})
+
+
+
+// Styles
+.container
+  z-index: 2
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+
+  width: 100vw
+  height: 100vh
+  height: calc(var(--vh, 1vh) * 100)
+
+.overlay
+  background: #000
+  position: absolute
+  top: 0
+  left: 0
+
+  width: 100vw
+  height: 100vh
+  height: calc(var(--vh, 1vh) * 100)
+
+.nav
+  z-index: 1
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+
+  width: 100%
+  display: flex
+  flex-direction: column
+  align-items: center
+  text-align: center
+
+.nav li:not(:last-child)
+  display: block
+  margin-bottom: 24px
+
+.nav span
+  display: block
+  opacity: 0.3
+  margin-bottom: 4px
+
+.nav a
+  &,
+  &:visited,
+  &:active,
+  &:focus
+    color: #fff
+
+// HOVER
+.nav li
+  transition: 0.25s cubic-bezier(0.25, 0.1, 0.25, 1)
+
+.nav ul:hover li
+  opacity: 0.3
+  
+.nav ul li:hover
+  opacity: 1
