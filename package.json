@@ -29,6 +29,7 @@
     "contentful": "^8.1.7",
     "contentful-management": "^7.8.0",
     "dotenv": "^8.2.0",
+    "gsap": "3.0.2",
     "locomotive-scroll": "^4.1.0",
     "lodash.clonedeep": "^4.5.0",
     "next": "10.0.7",

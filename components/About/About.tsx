@@ -255,3 +255,5 @@ export function About({ data, mobileText }: PropsI): JSX.Element {
     </section>
   );
 }
+
+About.displayName = 'About';

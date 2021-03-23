@@ -1,0 +1,218 @@
+@import "@/styles/responsive"
+@import "@/styles/breakpoints"
+@import "@/styles/grid-fn"
+
+.container
+  background: #EDECED
+
+  position: relative
+  display: flex
+  align-items: center
+  justify-content: center
+  flex-direction: column
+
+  min-height: 100vh
+  min-height: calc(var(--vh, 1vh) * 100)
+  width: 100vw
+  padding: 0 var(--unit)
+  overflow: hidden
+
+  i
+    line-height: 0.96
+    font-style: normal
+    letter-spacing: -0.04em
+    +responsive('font-size', (375px: 36px, 1920px: 144px))
+
+    display: block
+    margin-bottom: 0.33em
+
+    @media (max-width: $tab-sm)
+      margin-bottom: 40px
+
+  p:first-child
+    text-align: right
+
+  p:not(:first-child)
+    line-height: 1.2
+
+    @media (min-width: $tab-sm + 1)
+      max-width: column-spans(2)
+
+    @media (max-width: $tab-sm)
+      align-self: flex-start
+
+.quotes
+  position: relative
+  z-index: 1
+
+  color: transparent
+  text-shadow: 0px 0px 15px #000
+  opacity: 0
+  transition: 2s
+
+  width: 100%
+  display: flex
+  flex-direction: column
+  align-items: flex-end
+
+.quotes_blur
+  text-shadow: 0px 0px 0px #000
+  opacity: 1
+
+.quotes_faster
+  transition: 1s
+
+.nav
+  z-index: 1
+  position: absolute
+  bottom: 24px
+  left: calc(#{var(--unit)} + #{mix(3)})
+
+  width: column-spans(2)
+  display: flex
+  align-items: center
+
+  @media (max-width: $tab-sm)
+    display: none
+
+  button
+    margin-right: 24px
+
+.link
+  position: relative
+  transition: opacity 0.3s ease
+  transform: translateX(100%)
+
+  display: flex
+  align-items: center
+  margin-left: auto
+  margin-right: column-spans(1)
+
+  color: #000
+
+  &::before
+    content: ''
+    display: block
+    margin-right: 8px
+    width: 12px
+    height: 12px
+    border-radius: 50%
+    background: #000
+
+.link_hidden
+  opacity: 0
+  pointer-events: none
+
+.circle
+  position: absolute
+  left: 50%
+
+  width: 50vw
+  height: 50vw
+
+  transition: 2s ease 0.3s
+
+  @media (min-width: $tab-sm + 1)
+    pointer-events: none
+    top: 50%
+    transform: translate(-50%, -50%) scale(0)
+
+  @media (max-width: $tab-sm)
+    width: 200px
+    height: 200px
+
+    bottom: -16px
+    transform: translate(-50%, 0) scale(0)
+
+  &::before
+    @media (max-width: $tab-sm)
+      content: ''
+      display: block
+      width: 56px
+      height: 56px
+
+      z-index: 1
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+
+      border-radius: 50%
+      transition: 0.25s ease
+      border: 1px solid #000
+
+.circle_faster
+  transition: 1s ease
+
+.circle_img
+  width: 100%
+  height: 100%
+  object-fit: contain
+  transition: opacity 0.25s ease
+
+  &:nth-child(1)
+    @media (max-width: $tab-sm)
+      display: none
+
+.circle_img:nth-child(2),
+.circle_img_black
+  @media (min-width: $tab-sm + 1)
+    display: none
+
+.circle_img_black,
+.circle_moon
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+
+.circle_moon
+  width: 16px
+  height: 16px
+
+  transition: opacity 0.25s ease
+  pointer-events: none
+  opacity: 0
+
+  @media (min-width: $tab-sm + 1)
+    display: none
+
+.circle:not(.circle_animated)
+  opacity: 0
+
+.circle_animated
+  @media (max-width: $tab-sm)
+    transform: translate(-50%, 0) scale(1)
+
+.circle_animated[data-index="1"]
+  @media (min-width: $tab-sm + 1)
+    transform: translate(-50%, -50%) scale(0.6)
+
+.circle_animated[data-index="2"]
+  @media (min-width: $tab-sm + 1)
+    transform: translate(-50%, -50%) scale(0.8)
+
+.circle_animated[data-index="3"]
+  @media (min-width: $tab-sm + 1)
+    transform: translate(-50%, -50%) scale(1)
+
+  .circle_moon
+    opacity: 1
+
+.circle:not(.circle_last)
+  .circle_img_black
+    @media (max-width: $tab-sm)
+      opacity: 0
+
+.circle_last
+  &::before
+    border: 1px solid #c4c4c4
+
+  .circle_img:not(.circle_img_black)
+    @media (max-width: $tab-sm)
+      opacity: 0
+
+  .circle_img_black
+    @media (max-width: $tab-sm)
+      opacity: 1
+

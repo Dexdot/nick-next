@@ -151,3 +151,25 @@ export function createMobileAboutText(
 
   return [...textContent];
 }
+
+export function splitBlocksByHr(content: TopLevelBlock[]): TopLevelBlock[][] {
+  let counter = 0;
+  const slides: TopLevelBlock[][] = [];
+
+  content.forEach((block) => {
+    if (block.nodeType !== 'hr') {
+      const slide = slides[counter];
+
+      if (Array.isArray(slide)) {
+        slide.push(block);
+      } else {
+        slides[counter] = [];
+        slides[counter].push(block);
+      }
+    } else {
+      counter += 1;
+    }
+  });
+
+  return slides;
+}
