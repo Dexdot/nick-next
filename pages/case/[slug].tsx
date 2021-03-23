@@ -6,6 +6,7 @@ import type {
   GetStaticPropsContext
 } from 'next';
 
+import { Head } from '@/components/Head';
 import { CaseDetail } from '@/components/CaseDetail/CaseDetail';
 
 import { client } from '@/contentful/client';
@@ -49,5 +50,17 @@ export const getStaticProps: GetStaticProps = async ({
 export default function CasePage({
   caseData
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
-  return <CaseDetail data={caseData} />;
+  const { title, subtitle, cover } = caseData.fields;
+
+  return (
+    <>
+      <Head
+        title={title}
+        OGTitle={title}
+        description={subtitle}
+        OGImage={cover.fields.file.url}
+      />
+      <CaseDetail data={caseData} />
+    </>
+  );
 }

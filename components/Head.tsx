@@ -5,6 +5,7 @@ interface PropsI {
   title: string;
   keywords?: string;
   OGTitle?: string;
+  OGImage?: string;
   description?: string;
   robots?: string;
 }
@@ -12,6 +13,7 @@ interface PropsI {
 export function Head({
   title,
   OGTitle,
+  OGImage,
   description,
   keywords,
   robots
@@ -25,7 +27,7 @@ export function Head({
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
       />
 
-      <title>{title}</title>
+      <title>{title} | Nick Adams</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
       <meta name="robots" content={robots} />
@@ -37,11 +39,11 @@ export function Head({
       <meta property="og:url" content="https://nickadams.online/" />
       <meta property="og:site_name" content="Nick Adams" />
       <meta property="og:locale" content="ru_RU" />
-      <meta property="og:image" content="/favicon/nickadams.png" />
+      <meta property="og:image" content={OGImage} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={OGTitle} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content="/favicon/nickadams.png" />
+      <meta name="twitter:image" content={OGImage} />
       <meta name="theme-color" content="#ffffff" />
       <meta name="msapplication-TileColor" content="#000000" />
       <meta
@@ -82,6 +84,7 @@ Head.defaultProps = {
   keywords:
     'nick adams, nickadams, stereocage, designer, art director, web design',
   OGTitle: 'Nick Adams',
+  OGImage: '/favicon/nickadams.png',
   description: 'Digital designer & art director from St. Petersburg',
   robots: 'index, follow'
 };

@@ -5,6 +5,7 @@ import type { IAboutFields } from '@/contentful/types';
 import { client } from '@/contentful/client';
 import { createMobileAboutText } from '@/utils/utils';
 import { About } from '@/components/About/About';
+import { Head } from '@/components/Head';
 
 export const getStaticProps: GetStaticProps = async () => {
   const response = await client.getEntries({ content_type: 'about' });
@@ -25,5 +26,10 @@ export default function AboutPage({
   data,
   mobileText
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
-  return <About data={data} mobileText={mobileText} />;
+  return (
+    <>
+      <Head title="About" />
+      <About data={data} mobileText={mobileText} />
+    </>
+  );
 }

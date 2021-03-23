@@ -3,6 +3,7 @@ import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 import type { IBlackListFields } from '@/contentful/types';
 import { client } from '@/contentful/client';
 
+import { Head } from '@/components/Head';
 import { BlackList } from '@/components/BlackList/BlackList';
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -21,5 +22,10 @@ export const getStaticProps: GetStaticProps = async () => {
 export default function Black({
   list
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
-  return <BlackList list={list} />;
+  return (
+    <>
+      <Head title="Black" />
+      <BlackList list={list} />
+    </>
+  );
 }

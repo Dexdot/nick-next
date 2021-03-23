@@ -4,7 +4,6 @@ import { useLocomotiveScroll } from 'react-locomotive-scroll';
 import { InView } from 'react-intersection-observer';
 import cn from 'classnames';
 
-import { Head } from '@/components/Head';
 import { ICasesFields } from '@/contentful/types';
 import { disableDarkmode } from '@/store/darkmode';
 
@@ -15,10 +14,9 @@ const MAX_CASES_LEN = 16;
 
 interface PropsI {
   cases: ICasesFields['list'];
-  title: string;
 }
 
-export function Main({ title, cases }: PropsI): JSX.Element {
+export function Main({ cases }: PropsI): JSX.Element {
   const { scroll, isReady } = useLocomotiveScroll();
   const rects = useRef({});
 
@@ -101,8 +99,6 @@ export function Main({ title, cases }: PropsI): JSX.Element {
 
   return (
     <>
-      <Head title={`${title} | Nick Adams`} />
-
       <h2
         className={cn(cls.fixed_title, cls.fixed_title_desktop)}
         style={{

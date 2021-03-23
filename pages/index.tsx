@@ -1,6 +1,7 @@
 import React from 'react';
 import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 
+import { Head } from '@/components/Head';
 import { Main } from '@/components/Main/Main';
 import { client } from '@/contentful/client';
 import { ICasesFields } from '@/contentful/types';
@@ -22,5 +23,10 @@ export const getStaticProps: GetStaticProps = async () => {
 export default function Index({
   cases
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
-  return <Main title="Index" cases={cases} />;
+  return (
+    <>
+      <Head title="Index" />
+      <Main cases={cases} />
+    </>
+  );
 }
