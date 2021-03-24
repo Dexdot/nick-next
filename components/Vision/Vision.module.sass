@@ -48,12 +48,14 @@
   color: transparent
   text-shadow: 0px 0px 15px #000
   opacity: 0
-  transition: opacity 2s, text-shadow 2s
 
   width: 100%
   display: flex
   flex-direction: column
   align-items: flex-end
+
+.quotes_trs
+  transition: opacity 2s ease, text-shadow 2s ease
 
 .quotes_blur
   text-shadow: 0px 0px 0px #000
@@ -110,8 +112,6 @@
   width: 50vw
   height: 50vw
 
-  transition: 2s ease 0.3s
-
   @media (min-width: $tab-sm + 1)
     pointer-events: none
     top: 50%
@@ -140,6 +140,9 @@
       border-radius: 50%
       transition: 0.25s ease
       border: 1px solid #000
+
+.circle_trs
+  transition: 2s ease 0.3s
 
 .circle_faster
   transition: 1s ease

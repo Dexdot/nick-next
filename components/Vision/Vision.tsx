@@ -40,6 +40,9 @@ export function Vision({ slides }: PropsI): JSX.Element {
   const [, setDir, dirRef] = useRefState<SliderDirection>('next');
   const [activeSlide, setActiveSlide, activeSlideRef] = useRefState<number>(0);
 
+  const [quotesTrs, setQuotesTrs] = useState<boolean>(false);
+  const [circleTrs, setCircleTrs] = useState<boolean>(false);
+
   const [isCircleAnimated, setCircleAnimated] = useState<boolean>(false);
   const [isBlur, setBlur] = useState<boolean>(false);
   const [isFaster, setFaster] = useState<boolean>(false);
@@ -116,8 +119,9 @@ export function Vision({ slides }: PropsI): JSX.Element {
     }
   }, [activeSlideRef, slides]);
 
-  const enterAnimation = useCallback(() => {
+  const enterAnimation = useCallback(async () => {
     setTimeout(() => {
+      setQuotesTrs(true);
       setBlur(true);
     }, 200);
 
@@ -125,25 +129,25 @@ export function Vision({ slides }: PropsI): JSX.Element {
       setFaster(true);
     }, 2200);
 
+    setCircleTrs(true);
     setCircleAnimated(true);
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
-      if (document.readyState === 'complete') {
-        setTimeout(() => {
-          enterAnimation();
-        }, 400);
-      } else {
-        window.addEventListener('load', enterAnimation);
-      }
-    }, 0);
+    if (document.readyState === 'complete') {
+      setTimeout(() => {
+        enterAnimation();
+      }, 400);
+    } else {
+      window.addEventListener('load', enterAnimation);
+    }
   }, []);
 
   return (
     <section className={cls.container}>
       <article
         className={cn(cls.quotes, {
+          [cls.quotes_trs]: quotesTrs,
           [cls.quotes_blur]: isBlur,
           [cls.quotes_faster]: isFaster
         })}
@@ -192,6 +196,7 @@ export function Vision({ slides }: PropsI): JSX.Element {
       <button
         type="button"
         className={cn(cls.circle, {
+          [cls.circle_trs]: circleTrs,
           [cls.circle_animated]: isCircleAnimated,
           [cls.circle_faster]: isFaster,
           [cls.circle_last]: activeSlide === slides.length - 1
