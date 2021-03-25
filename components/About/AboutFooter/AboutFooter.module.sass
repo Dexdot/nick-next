@@ -1,0 +1,44 @@
+@import "@/styles/responsive"
+@import "@/styles/breakpoints"
+@import "@/styles/grid-fn"
+
+.container
+  position: relative
+  height: 100vh
+  height: calc(var(--vh, 1vh) * 100)
+
+
+.title
+  @media (max-width: $tab-sm)
+    margin-bottom: 24px
+    text-align: right
+
+  @media (min-width: $tab-sm + 1)
+    position: absolute
+    left: calc(var(--unit) + #{mix(1)})
+    top: 50%
+    transform: translateY(-50%)
+
+.inner
+  @media (max-width: $tab-sm)
+    height: 100%
+    padding: 64px var(--unit)
+    display: flex
+    flex-direction: column
+    align-items: flex-end
+    justify-content: flex-end
+
+.inner p
+  opacity: 0.6
+
+  @media (max-width: $tab-sm)
+    align-self: flex-start
+    margin-left: 19.2vw
+
+  @media (min-width: $tab-sm + 1)
+    bottom: 64px
+    position: absolute
+    right: var(--unit)
+
+    width: columns(1)
+

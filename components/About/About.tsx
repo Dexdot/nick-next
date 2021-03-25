@@ -8,8 +8,10 @@ import { isImage, isText, isVideo, renderText } from '@/utils/utils';
 import { enableDarkmode } from '@/store/darkmode';
 import { openModal } from '@/store/modal';
 import { ContentfulImage } from '@/components/ContentfulImage';
+import { PageFooter } from '@/components/PageFooter';
 
 import cls from './About.module.sass';
+import { AboutFooter } from './AboutFooter/AboutFooter';
 
 interface PropsI {
   data: IAboutFields;
@@ -256,6 +258,10 @@ export function About({ data, mobileText }: PropsI): JSX.Element {
           </button>
         </div>
       </div>
+
+      <PageFooter href="/vision">
+        <AboutFooter />
+      </PageFooter>
     </section>
   );
 }

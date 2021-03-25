@@ -38,7 +38,7 @@ export function PageFooter({
     (inView: boolean, entry: IntersectionObserverEntry) => {
       // TODO: if (isRouteAnimating) return false;
 
-      if (entry.intersectionRatio >= 0.3) {
+      if (inView && entry.intersectionRatio >= 0.3) {
         if (onEnter) onEnter();
 
         if (!isAnimatingRef.current) {
