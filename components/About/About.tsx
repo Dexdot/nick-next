@@ -90,7 +90,11 @@ export function About({ data, mobileText }: PropsI): JSX.Element {
   }, []);
 
   useEffect(() => {
-    splitText();
+    if (document.readyState === 'complete') {
+      splitText();
+    } else {
+      window.addEventListener('load', splitText);
+    }
   }, []);
 
   // Credits button
