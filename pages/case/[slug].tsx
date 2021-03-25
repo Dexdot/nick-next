@@ -31,16 +31,30 @@ export const getStaticProps: GetStaticProps = async ({
   params
 }: GetStaticPropsContext) => {
   const { slug } = params;
+
   const entry = await client.getEntries({
-    content_type: 'case',
-    'fields.slug': slug
+    content_type: 'case'
   });
 
-  const caseData = entry.items[0] as ICase;
+  // Find this case
+  const allCases = entry.items as ICase[];
+  const filteredCases = allCases.filter((c) => !c.fields.soon);
+  const thisCase = filteredCases.find((c) => c.fields.slug === slug);
+
+  // Get random case
+  const casesWithoutThisCase = filteredCases.filter(
+    (c) => c.fields.slug !== slug
+  );
+
+  const randomCase =
+    casesWithoutThisCase[
+      Math.floor(Math.random() * casesWithoutThisCase.length)
+    ];
 
   return {
     props: {
-      caseData,
+      caseData: thisCase,
+      nextCase: randomCase,
       revalidate: 10,
       fallback: true
     }
@@ -48,7 +62,8 @@ export const getStaticProps: GetStaticProps = async ({
 };
 
 export default function CasePage({
-  caseData
+  caseData,
+  nextCase
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
   const { title, subtitle, cover } = caseData.fields;
 
@@ -60,7 +75,7 @@ export default function CasePage({
         description={subtitle}
         OGImage={cover.fields.file.url}
       />
-      <CaseDetail data={caseData} />
+      <CaseDetail data={caseData} nextCase={nextCase} />
     </>
   );
 }

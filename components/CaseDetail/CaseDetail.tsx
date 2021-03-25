@@ -16,14 +16,18 @@ import { CaseRich } from './CaseRich';
 
 interface PropsI {
   data: ICase;
+  nextCase: ICase;
 }
 
-export function CaseDetail({ data }: PropsI): JSX.Element {
+export function CaseDetail({ data, nextCase }: PropsI): JSX.Element {
+  // Darkmode
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(disableDarkmode());
   }, []);
 
+  // Data
   const fields = useMemo<ICaseFields>(() => data.fields, [data]);
 
   const hasRoles = useMemo<boolean>(
