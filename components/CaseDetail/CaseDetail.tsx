@@ -3,16 +3,18 @@ import { useDispatch } from 'react-redux';
 import cn from 'classnames';
 
 import { ICase, ICaseFields } from '@/contentful/types';
-import { disableDarkmode } from '@/store/darkmode';
+import { disableDarkmode, enableDarkmode } from '@/store/darkmode';
 import { openModal } from '@/store/modal';
 import { setStories } from '@/store/stories';
 import { getStyleRatio } from '@/utils/utils';
+import { PageFooter } from '@/components/PageFooter';
 
 import cls from '@/components/CaseDetail/CaseDetail.module.sass';
 import { ContentfulImage } from '@/components/ContentfulImage';
 import { CaseStories } from '@/components/CaseDetail/CaseStories/CaseStories';
 import { CaseFooter } from './CaseFooter/CaseFooter';
 import { CaseRich } from './CaseRich';
+import { CaseNext } from './CaseNext/CaseNext';
 
 interface PropsI {
   data: ICase;
@@ -96,6 +98,16 @@ export function CaseDetail({ data, nextCase }: PropsI): JSX.Element {
           <CaseFooter fields={fields} />
         </div>
       </article>
+
+      {nextCase && (
+        <PageFooter
+          href={`/case/${nextCase.fields.slug}`}
+          onEnter={() => dispatch(enableDarkmode())}
+          onLeave={() => dispatch(disableDarkmode())}
+        >
+          <CaseNext nextCase={nextCase} />
+        </PageFooter>
+      )}
     </div>
   );
 }
