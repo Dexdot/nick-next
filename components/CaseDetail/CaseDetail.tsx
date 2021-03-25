@@ -6,6 +6,7 @@ import { ICase, ICaseFields } from '@/contentful/types';
 import { disableDarkmode } from '@/store/darkmode';
 import { openModal } from '@/store/modal';
 import { setStories } from '@/store/stories';
+import { getStyleRatio } from '@/utils/utils';
 
 import cls from '@/components/CaseDetail/CaseDetail.module.sass';
 import { ContentfulImage } from '@/components/ContentfulImage';
@@ -59,7 +60,10 @@ export function CaseDetail({ data }: PropsI): JSX.Element {
           {fields.title}
         </h1>
 
-        <div className={cn(cls.image, cls.cover)}>
+        <div
+          className={cn(cls.image, cls.cover)}
+          style={getStyleRatio(fields.cover)}
+        >
           <ContentfulImage img={fields.cover} />
 
           {hasStories && (

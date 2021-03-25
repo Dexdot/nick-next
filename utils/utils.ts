@@ -173,3 +173,14 @@ export function splitBlocksByHr(content: TopLevelBlock[]): TopLevelBlock[][] {
 
   return slides;
 }
+
+export function getAssetRatio(asset: Asset): number {
+  const size = asset.fields.file.details.image;
+  const { width, height } = size;
+  const aspect = height / width;
+  return Number.parseFloat(aspect.toFixed(4)) * 100;
+}
+
+export function getStyleRatio(asset: Asset): React.CSSProperties {
+  return { '--ratio': `${getAssetRatio(asset)}%` } as React.CSSProperties;
+}

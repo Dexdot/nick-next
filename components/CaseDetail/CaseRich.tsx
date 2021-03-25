@@ -6,6 +6,7 @@ import { Document } from '@contentful/rich-text-types';
 
 import { ICaseFields } from '@/contentful/types';
 import {
+  getStyleRatio,
   isBlock,
   isImageBlock,
   isNotText,
@@ -120,7 +121,9 @@ export function CaseRich({ fields }: PropsI): JSX.Element {
           )}
 
           {isImageBlock(item) && (
-            <ContentfulImage className={cls.image} img={item.data.target} />
+            <div className={cls.image} style={getStyleRatio(item.data.target)}>
+              <ContentfulImage img={item.data.target} />
+            </div>
           )}
 
           {isVideoBlock(item) && (

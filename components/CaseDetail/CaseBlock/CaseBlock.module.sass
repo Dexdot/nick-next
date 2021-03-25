@@ -12,11 +12,28 @@
   @media (max-width: $tab)
     margin-bottom: 8px
 
-  img, video
+  img,
+  video
     display: block
     width: 100%
     height: auto
 
+.image_ratio
+  position: relative
+
+  &::before
+    content: ''
+    display: block
+    width: 100%
+    padding-top: var(--ratio)
+
+  img
+    position: absolute
+    top: 0
+    left: 0
+    height: 100%
+    object-fit: cover
+  
 .text
   @media (min-width: $tab + 1)
     position: absolute

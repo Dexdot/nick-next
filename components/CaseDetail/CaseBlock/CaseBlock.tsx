@@ -2,7 +2,13 @@ import React, { useMemo } from 'react';
 import cn from 'classnames';
 
 import { ContentfulImage } from '@/components/ContentfulImage';
-import { isImage, isText, isVideo, renderText } from '@/utils/utils';
+import {
+  getAssetRatio,
+  isImage,
+  isText,
+  isVideo,
+  renderText
+} from '@/utils/utils';
 import { ICaseBlockFields } from '@/contentful/types';
 
 import cls from './CaseBlock.module.sass';
@@ -28,9 +34,12 @@ export function CaseBlock({ data }: PropsI): JSX.Element {
     <div className={cls.block}>
       {data.image && (
         <div
-          className={cls.image}
+          className={cn(cls.image, { [cls.image_ratio]: isImage(data.image) })}
           style={
             {
+              '--ratio': isImage(data.image)
+                ? `${getAssetRatio(data.image)}%`
+                : '',
               '--width': data.imageWidth || 3,
               '--offset': data.imageOffset || 0
             } as React.CSSProperties
