@@ -1,14 +1,16 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocomotiveScroll } from 'react-locomotive-scroll';
-import { InView } from 'react-intersection-observer';
 import cn from 'classnames';
 
 import { ICasesFields } from '@/contentful/types';
-import { disableDarkmode } from '@/store/darkmode';
+import { disableDarkmode, enableDarkmode } from '@/store/darkmode';
+
+import { PageFooter } from '@/components/PageFooter';
 
 import cls from './Main.module.sass';
 import { CasePreview } from './CasePreview';
+import { MainFooter } from './MainFooter/MainFooter';
 
 const MAX_CASES_LEN = 16;
 
@@ -17,6 +19,14 @@ interface PropsI {
 }
 
 export function Main({ cases }: PropsI): JSX.Element {
+  // Darkmode
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(disableDarkmode());
+  }, []);
+
+  // Scroll
   const { scroll, isReady } = useLocomotiveScroll();
   const rects = useRef({});
 
@@ -37,13 +47,15 @@ export function Main({ cases }: PropsI): JSX.Element {
   const [titleOpacity, setTitleOpacity] = useState<number>(1);
   const [caseTitle, setCaseTitle] = useState<string>(cases[0].fields.title);
 
-  const handleFooterVisible = useCallback(
-    (isVisible: boolean, entry: IntersectionObserverEntry) => {
-      const visible = isVisible && entry.intersectionRatio >= 0.3;
-      setTitleOpacity(visible ? 0 : 1);
-    },
-    []
-  );
+  const onFooterEnter = useCallback(() => {
+    setTitleOpacity(0);
+    dispatch(enableDarkmode());
+  }, []);
+
+  const onFooterLeave = useCallback(() => {
+    setTitleOpacity(1);
+    dispatch(disableDarkmode());
+  }, []);
 
   const handleIntersect = useCallback(
     (t: string, isVisible: boolean, entry: IntersectionObserverEntry) => {
@@ -90,13 +102,6 @@ export function Main({ cases }: PropsI): JSX.Element {
     };
   }, [isReady]);
 
-  // Darkmode
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(disableDarkmode());
-  }, []);
-
   return (
     <>
       <h2
@@ -137,13 +142,13 @@ export function Main({ cases }: PropsI): JSX.Element {
           ))}
         </div>
 
-        <InView
-          as="div"
-          onChange={handleFooterVisible}
-          threshold={[0, 0.3, 0.6, 1]}
+        <PageFooter
+          href="/about"
+          onEnter={onFooterEnter}
+          onLeave={onFooterLeave}
         >
-          <div className={cls.footer} />
-        </InView>
+          <MainFooter />
+        </PageFooter>
       </section>
     </>
   );

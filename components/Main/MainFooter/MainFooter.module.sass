@@ -1,0 +1,56 @@
+@import "@/styles/responsive"
+@import "@/styles/breakpoints"
+@import "@/styles/grid-fn"
+
+.container
+  position: relative
+  height: 100vh
+  height: calc(var(--vh, 1vh) * 100)
+
+
+.title
+  @media (max-width: $tab-sm)
+    margin-bottom: 24px
+    text-align: right
+
+  @media (min-width: $tab-sm + 1)
+    position: absolute
+    top: 32%
+    left: calc(var(--unit) + #{mix(1)})
+
+.inner
+  @media (max-width: $tab-sm)
+    height: 100%
+    padding: 24px var(--unit)
+    display: flex
+    flex-direction: column
+    align-items: flex-end
+    justify-content: flex-end
+
+.inner p
+  opacity: 0.6
+
+  @media (max-width: $tab-sm)
+    margin-right: 19.4vw
+
+  @media (min-width: $tab-sm + 1)
+    bottom: 48px
+    position: absolute
+    left: calc(var(--unit) + #{mix(2)})
+
+
+.image
+  height: auto
+  display: block
+
+  @media (max-width: $tab-sm)
+    width: 55vw
+    max-width: 320px
+    margin-top: 24vh
+
+  @media (min-width: $tab-sm + 1)
+    width: columns(1)
+
+    position: absolute
+    bottom: 48px
+    right: var(--unit)
