@@ -13,7 +13,7 @@ import { initCSSProps } from '@/utils/css-props';
 import { initNprogress } from '@/utils/nprogress';
 
 initNprogress();
-const SMOOTH_SCROLL = false;
+const SMOOTH_SCROLL = true;
 
 interface PropsI {
   children: JSX.Element;

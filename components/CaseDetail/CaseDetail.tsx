@@ -104,6 +104,7 @@ export function CaseDetail({ data, nextCase }: PropsI): JSX.Element {
           href={`/case/${nextCase.fields.slug}`}
           onEnter={() => dispatch(enableDarkmode())}
           onLeave={() => dispatch(disableDarkmode())}
+          intersectionRatio={0.3}
         >
           <CaseNext nextCase={nextCase} />
         </PageFooter>

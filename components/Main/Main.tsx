@@ -119,7 +119,7 @@ export function Main({ cases }: PropsI): JSX.Element {
         </span>
       </h2>
 
-      <section data-scroll-section>
+      <section>
         <div className={cls.container}>
           <h2
             className={cls.fixed_title}

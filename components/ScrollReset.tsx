@@ -12,9 +12,11 @@ export function ScrollReset({ children }: PropsI): JSX.Element {
 
   useEffect(() => {
     if (locoScroll) {
+      locoScroll.update();
       locoScroll.setScroll(0, 0);
+      locoScroll.update();
     }
-  }, [router.pathname]);
+  }, [router.asPath]);
 
   return <div>{children}</div>;
 }
