@@ -4,7 +4,6 @@ import { LocomotiveScrollProvider } from 'react-locomotive-scroll';
 import 'locomotive-scroll/dist/locomotive-scroll.min.css';
 
 import { Darkmode } from '@/components/Darkmode/Darkmode';
-import { ScrollReset } from '@/components/ScrollReset';
 import { Header } from '@/components/Header/Header';
 import { Menu } from '@/components/Menu/Menu';
 import { Stories } from '@/components/Stories/Stories';
@@ -37,11 +36,9 @@ export function AppLayout({ children }: PropsI): JSX.Element {
         >
           <Header />
 
-          <ScrollReset>
-            <main data-scroll-container ref={containerRef}>
-              {children}
-            </main>
-          </ScrollReset>
+          <main data-scroll-container ref={containerRef}>
+            {children}
+          </main>
 
           <Menu />
           <Stories />
