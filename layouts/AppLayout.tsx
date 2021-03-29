@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { LocomotiveScrollProvider } from 'react-locomotive-scroll';
 import 'locomotive-scroll/dist/locomotive-scroll.min.css';
 
+import { PageTransition } from '@/components/PageTransition';
 import { Darkmode } from '@/components/Darkmode/Darkmode';
 import { Header } from '@/components/Header/Header';
 import { Menu } from '@/components/Menu/Menu';
@@ -37,7 +38,9 @@ export function AppLayout({ children }: PropsI): JSX.Element {
           <Header />
 
           <main data-scroll-container ref={containerRef}>
-            {children}
+            <PageTransition pathname={router.pathname}>
+              {children}
+            </PageTransition>
           </main>
 
           <Menu />
