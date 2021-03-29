@@ -1,6 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 
+// Dont animate leave on start
+// Reset scroll
+// Set isRouteAnimating to store
+// Close menu
+// Animations for every page
+
 interface PropsI {
   pathname: string;
   children: React.ReactElement;
