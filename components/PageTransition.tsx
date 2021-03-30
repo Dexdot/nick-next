@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 
-// Dont animate leave on start
 // Reset scroll
 // Set isRouteAnimating to store
 // Close menu
@@ -13,6 +12,8 @@ interface PropsI {
 }
 
 function leave(node): Promise<void> {
+  console.log('leave');
+
   return new Promise<void>((resolve) => {
     gsap.to(node, {
       opacity: 0,
@@ -23,6 +24,8 @@ function leave(node): Promise<void> {
 }
 
 function enter(node): Promise<void> {
+  console.log('enter');
+
   return new Promise<void>((resolve) => {
     gsap.to(node, {
       opacity: 1,
@@ -57,22 +60,28 @@ const map = {
 
 export function PageTransition({ children, pathname }: PropsI): JSX.Element {
   const containerRef = useRef(null);
+
+  const [initial, setInitial] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<React.ReactElement>(children);
   const [currentPath, setCurrentPath] = useState<string>(pathname);
 
   const onChange = useCallback(
     async (newChildren: React.ReactElement, newPath: string) => {
+      const isInitial = initial;
+
+      if (isInitial) setInitial(false);
+
       // leave
-      await map[currentPath].leave(containerRef.current);
+      if (!isInitial) await map[currentPath].leave(containerRef.current);
 
       // enter
       setCurrentPage(newChildren);
       setTimeout(async () => {
-        await map[newPath].enter(containerRef.current);
+        if (!isInitial) await map[newPath].enter(containerRef.current);
         setCurrentPath(newPath);
       }, 0);
     },
-    [containerRef, currentPath]
+    [containerRef, currentPath, initial]
   );
 
   useEffect(() => {
