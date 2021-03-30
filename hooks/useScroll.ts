@@ -3,10 +3,10 @@ import { LocomotiveScrollContextValue } from 'react-locomotive-scroll/module/Loc
 
 type ScrollDir = 'top' | 'bottom';
 
-export function useScrollDirection({
+export function useScroll({
   scroll,
   isReady
-}: LocomotiveScrollContextValue): ScrollDir {
+}: LocomotiveScrollContextValue): { dir: ScrollDir; y: number } {
   const lastScroll = useRef<number>(0);
   const [direction, setDirection] = useState<ScrollDir>('bottom');
 
@@ -27,5 +27,5 @@ export function useScrollDirection({
     };
   }, [isReady]);
 
-  return direction;
+  return { y: lastScroll.current, dir: direction };
 }

@@ -103,7 +103,7 @@ export function Main({ cases }: PropsI): JSX.Element {
   }, [isReady]);
 
   return (
-    <div>
+    <>
       <h2
         className={cn(cls.fixed_title, cls.fixed_title_desktop)}
         style={{
@@ -119,7 +119,7 @@ export function Main({ cases }: PropsI): JSX.Element {
         </span>
       </h2>
 
-      <section>
+      <section data-scroll-section>
         <div className={cls.container}>
           <h2
             className={cls.fixed_title}
@@ -150,7 +150,7 @@ export function Main({ cases }: PropsI): JSX.Element {
           <MainFooter />
         </PageFooter>
       </section>
-    </div>
+    </>
   );
 }
 

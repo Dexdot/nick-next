@@ -105,7 +105,7 @@ export function About({ data, mobileText }: PropsI): JSX.Element {
   }, []);
 
   return (
-    <section>
+    <section data-scroll-section>
       <div className={cls.container}>
         <article className={cls.text_wrap}>
           <p className={cls.date}>2016-{CURRENT_YEAR}</p>

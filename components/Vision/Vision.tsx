@@ -144,7 +144,7 @@ export function Vision({ slides }: PropsI): JSX.Element {
   }, []);
 
   return (
-    <section className={cls.container}>
+    <section className={cls.container} data-scroll-section>
       <article
         className={cn(cls.quotes, {
           [cls.quotes_trs]: quotesTrs,

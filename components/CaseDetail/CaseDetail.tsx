@@ -56,7 +56,7 @@ export function CaseDetail({ data, nextCase }: PropsI): JSX.Element {
   }, [fields]);
 
   return (
-    <div>
+    <div data-scroll-section>
       <article className={cls.wrapper}>
         <h1
           className={cn('t-h1', cls.title, {

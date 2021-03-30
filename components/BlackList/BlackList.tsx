@@ -20,7 +20,7 @@ export function BlackList({ list }: PropsI): JSX.Element {
   }, []);
 
   return (
-    <section className="container">
+    <section className="container" data-scroll-section>
       <ul className={cls.list}>
         {list.map((asset) => (
           <li
