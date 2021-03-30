@@ -1,45 +1,32 @@
-import Router from 'next/router';
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
-type Cleanup = () => void;
-
-// https://github.com/vercel/next.js/issues/17464#issuecomment-751267740
-export const useTransitionFix = (): Cleanup => {
-  const cleanupRef = useRef<Cleanup>(null);
-
+// https://github.com/vercel/next.js/issues/17464#issuecomment-796430107
+export function useTransitionFix(): void {
   useEffect(() => {
-    const onChange = () => {
-      const nodes = Array.from(
-        document.querySelectorAll('link[rel=stylesheet], style:not([media=x])')
-      );
-      const copies = [...nodes].map((el) => el.cloneNode(true) as HTMLElement);
+    Array.from(
+      document.querySelectorAll('head > link[rel="stylesheet"][data-n-p]')
+    ).forEach((node) => {
+      node.removeAttribute('data-n-p');
+    });
 
-      copies.forEach((copy) => {
-        // Remove Next.js' data attributes so the copies are not removed from the DOM in the route
-        // change process.
-        copy.removeAttribute('data-n-p');
-        copy.removeAttribute('data-n-href');
-
-        // Add duplicated nodes to the DOM.
-        document.head.appendChild(copy);
+    const mutationHandler = (mutations) => {
+      mutations.forEach(({ target }) => {
+        if (target.nodeName === 'STYLE') {
+          if (target.getAttribute('media') === 'x') {
+            target.removeAttribute('media');
+          }
+        }
       });
-
-      cleanupRef.current = () => {
-        copies.forEach((copy) => {
-          document.head.removeChild(copy);
-        });
-      };
     };
 
-    Router.events.on('routeChangeStart', onChange);
+    const observer = new MutationObserver(mutationHandler);
+    observer.observe(document.head, {
+      subtree: true,
+      attributeFilter: ['media']
+    });
 
     return () => {
-      Router.events.off('routeChangeStart', onChange);
-      if (cleanupRef && cleanupRef.current) cleanupRef.current();
+      observer.disconnect();
     };
   }, []);
-
-  return useCallback(() => {
-    if (cleanupRef && cleanupRef.current) cleanupRef.current();
-  }, []);
-};
+}

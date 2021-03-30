@@ -67,7 +67,6 @@ export function PageTransition({ children, pathname }: PropsI): JSX.Element {
   const modal = useSelector((s: RootState) => s.modal);
 
   const { scroll: locoScroll } = useLocomotiveScroll();
-  const cleanupStyles = useTransitionFix();
 
   const [initial, setInitial] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<React.ReactElement>(children);
@@ -108,9 +107,6 @@ export function PageTransition({ children, pathname }: PropsI): JSX.Element {
       // Leave
       if (!isInitial) await map[currentPath].leave(containerRef.current);
 
-      // Cleanup styles
-      cleanupStyles();
-
       // Reset scroll
       if (locoScroll) {
         locoScroll.setScroll(0, 0);
@@ -126,12 +122,14 @@ export function PageTransition({ children, pathname }: PropsI): JSX.Element {
         dispatch(setRouteAnimating(false));
       }, 0);
     },
-    [containerRef, currentPath, initial, locoScroll, modal.open, cleanupStyles]
+    [containerRef, currentPath, initial, locoScroll, modal.open]
   );
 
   useEffect(() => {
     onChange(children, pathname);
   }, [children, pathname]);
+
+  useTransitionFix();
 
   return <div ref={containerRef}>{currentPage}</div>;
 }
