@@ -184,3 +184,7 @@ export function getAssetRatio(asset: Asset): number {
 export function getStyleRatio(asset: Asset): React.CSSProperties {
   return { '--ratio': `${getAssetRatio(asset)}%` } as React.CSSProperties;
 }
+
+export function pause(time: number): Promise<void> {
+  return new Promise<void>((resolve) => setTimeout(resolve, time));
+}

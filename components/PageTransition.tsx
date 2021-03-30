@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocomotiveScroll } from 'react-locomotive-scroll';
+import { useDispatch, useSelector } from 'react-redux';
 import { gsap } from 'gsap';
 
-// Set isRouteAnimating to store
-// Close menu
-// Animations for every page
+import { setRouteAnimating } from '@/store/route-animating';
+import type { RootState } from '@/store/root-reducer';
+import { closeModal } from '@/store/modal';
+import { pause } from '@/utils/utils';
 
 interface PropsI {
   pathname: string;
@@ -59,7 +61,9 @@ const map = {
 };
 
 export function PageTransition({ children, pathname }: PropsI): JSX.Element {
+  const dispatch = useDispatch();
   const containerRef = useRef(null);
+  const modal = useSelector((s: RootState) => s.modal);
   const { scroll: locoScroll } = useLocomotiveScroll();
 
   const [initial, setInitial] = useState<boolean>(true);
@@ -68,9 +72,20 @@ export function PageTransition({ children, pathname }: PropsI): JSX.Element {
 
   const onChange = useCallback(
     async (newChildren: React.ReactElement, newPath: string) => {
+      dispatch(setRouteAnimating(true));
+
       // Initial flag
       const isInitial = initial;
       if (isInitial) setInitial(false);
+
+      // Close modal
+      const isModalOpen = modal.open;
+      const modalDelay = isModalOpen ? 1040 : 0;
+      if (isModalOpen) {
+        dispatch(closeModal());
+      }
+
+      await pause(modalDelay);
 
       // Leave
       if (!isInitial) await map[currentPath].leave(containerRef.current);
@@ -86,9 +101,10 @@ export function PageTransition({ children, pathname }: PropsI): JSX.Element {
       setTimeout(async () => {
         if (!isInitial) await map[newPath].enter(containerRef.current);
         setCurrentPath(newPath);
+        dispatch(setRouteAnimating(false));
       }, 0);
     },
-    [containerRef, currentPath, initial, locoScroll]
+    [containerRef, currentPath, initial, locoScroll, modal.open]
   );
 
   useEffect(() => {

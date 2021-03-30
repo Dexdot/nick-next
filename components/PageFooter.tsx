@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { InView } from 'react-intersection-observer';
+import { useSelector } from 'react-redux';
 
 import { useRefState } from '@/hooks/useRefState';
+import type { RootState } from '@/store/root-reducer';
 
 interface PropsI {
   children: React.ReactNode;
@@ -25,6 +27,7 @@ export function PageFooter({
 }: PropsI): JSX.Element {
   const router = useRouter();
   const timer = useRef(null);
+  const isRouteAnimating = useSelector((s: RootState) => s.routeAnimating);
   const [, setAnimating, isAnimatingRef] = useRefState<boolean>(false);
 
   const goToRoute = useCallback(() => {
@@ -39,12 +42,10 @@ export function PageFooter({
 
   const handleVisible = useCallback(
     (inView: boolean, entry: IntersectionObserverEntry) => {
-      // TODO: if (isRouteAnimating) return false;
-
       if (inView && entry.intersectionRatio >= intersectionRatio) {
         if (onEnter) onEnter();
 
-        if (!isAnimatingRef.current) {
+        if (!isAnimatingRef.current && !isRouteAnimating) {
           startCount();
         }
       } else {
@@ -54,7 +55,15 @@ export function PageFooter({
         setAnimating(false);
       }
     },
-    [onEnter, onLeave, isAnimatingRef, startCount, timer, intersectionRatio]
+    [
+      isRouteAnimating,
+      onEnter,
+      onLeave,
+      isAnimatingRef,
+      startCount,
+      timer,
+      intersectionRatio
+    ]
   );
 
   useEffect(() => {
