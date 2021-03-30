@@ -7,6 +7,7 @@ import { setRouteAnimating } from '@/store/route-animating';
 import type { RootState } from '@/store/root-reducer';
 import { closeModal } from '@/store/modal';
 import { pause } from '@/utils/utils';
+import { useTransitionFix } from '@/hooks/useTransitionFix';
 
 interface PropsI {
   pathname: string;
@@ -19,7 +20,7 @@ function leave(node): Promise<void> {
   return new Promise<void>((resolve) => {
     gsap.to(node, {
       opacity: 0,
-      duration: 6,
+      duration: 1,
       onComplete: resolve
     });
   });
@@ -31,7 +32,7 @@ function enter(node): Promise<void> {
   return new Promise<void>((resolve) => {
     gsap.to(node, {
       opacity: 1,
-      duration: 6,
+      duration: 1,
       onComplete: resolve
     });
   });
@@ -64,7 +65,9 @@ export function PageTransition({ children, pathname }: PropsI): JSX.Element {
   const dispatch = useDispatch();
   const containerRef = useRef(null);
   const modal = useSelector((s: RootState) => s.modal);
+
   const { scroll: locoScroll } = useLocomotiveScroll();
+  const cleanupStyles = useTransitionFix();
 
   const [initial, setInitial] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<React.ReactElement>(children);
@@ -105,6 +108,9 @@ export function PageTransition({ children, pathname }: PropsI): JSX.Element {
       // Leave
       if (!isInitial) await map[currentPath].leave(containerRef.current);
 
+      // Cleanup styles
+      cleanupStyles();
+
       // Reset scroll
       if (locoScroll) {
         locoScroll.setScroll(0, 0);
@@ -120,7 +126,7 @@ export function PageTransition({ children, pathname }: PropsI): JSX.Element {
         dispatch(setRouteAnimating(false));
       }, 0);
     },
-    [containerRef, currentPath, initial, locoScroll, modal.open]
+    [containerRef, currentPath, initial, locoScroll, modal.open, cleanupStyles]
   );
 
   useEffect(() => {
