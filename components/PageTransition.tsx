@@ -19,7 +19,7 @@ function leave(node): Promise<void> {
   return new Promise<void>((resolve) => {
     gsap.to(node, {
       opacity: 0,
-      duration: 0.4,
+      duration: 6,
       onComplete: resolve
     });
   });
@@ -31,7 +31,7 @@ function enter(node): Promise<void> {
   return new Promise<void>((resolve) => {
     gsap.to(node, {
       opacity: 1,
-      duration: 0.4,
+      duration: 6,
       onComplete: resolve
     });
   });
@@ -72,6 +72,20 @@ export function PageTransition({ children, pathname }: PropsI): JSX.Element {
 
   const onChange = useCallback(
     async (newChildren: React.ReactElement, newPath: string) => {
+      // Fix native scroll reset issue
+      const isMobile =
+        locoScroll?.scroll.isMobile || locoScroll?.scroll.isTablet;
+      const startY = locoScroll?.scroll.instance.scroll.y;
+
+      if (
+        isMobile &&
+        startY > 0 &&
+        startY !== document.scrollingElement.scrollTop
+      ) {
+        window.scrollTo(0, startY);
+      }
+
+      // Animating flag
       dispatch(setRouteAnimating(true));
 
       // Initial flag
@@ -80,7 +94,8 @@ export function PageTransition({ children, pathname }: PropsI): JSX.Element {
 
       // Close modal
       const isModalOpen = modal.open;
-      const modalDelay = isModalOpen ? 1040 : 0;
+      const modalDelay = isModalOpen ? 400 : 0;
+
       if (isModalOpen) {
         dispatch(closeModal());
       }
@@ -93,6 +108,7 @@ export function PageTransition({ children, pathname }: PropsI): JSX.Element {
       // Reset scroll
       if (locoScroll) {
         locoScroll.setScroll(0, 0);
+        window.scrollTo(0, 0);
         locoScroll.update();
       }
 

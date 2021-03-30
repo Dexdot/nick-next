@@ -32,8 +32,10 @@ export function AppLayout({ children }: PropsI): JSX.Element {
       <Darkmode>
         <LocomotiveScrollProvider
           containerRef={containerRef}
-          options={{ smooth: SMOOTH_SCROLL, tablet: { breakpoint: 768 } }}
-          watch={[router.pathname]}
+          options={{
+            smooth: SMOOTH_SCROLL,
+            tablet: { breakpoint: 768 }
+          }}
         >
           <Header />
 
