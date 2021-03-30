@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useLocomotiveScroll } from 'react-locomotive-scroll';
 import { gsap } from 'gsap';
 
-// Reset scroll
 // Set isRouteAnimating to store
 // Close menu
 // Animations for every page
@@ -60,6 +60,7 @@ const map = {
 
 export function PageTransition({ children, pathname }: PropsI): JSX.Element {
   const containerRef = useRef(null);
+  const { scroll: locoScroll } = useLocomotiveScroll();
 
   const [initial, setInitial] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<React.ReactElement>(children);
@@ -67,21 +68,27 @@ export function PageTransition({ children, pathname }: PropsI): JSX.Element {
 
   const onChange = useCallback(
     async (newChildren: React.ReactElement, newPath: string) => {
+      // Initial flag
       const isInitial = initial;
-
       if (isInitial) setInitial(false);
 
-      // leave
+      // Leave
       if (!isInitial) await map[currentPath].leave(containerRef.current);
 
-      // enter
+      // Reset scroll
+      if (locoScroll) {
+        locoScroll.setScroll(0, 0);
+        locoScroll.update();
+      }
+
+      // Enter
       setCurrentPage(newChildren);
       setTimeout(async () => {
         if (!isInitial) await map[newPath].enter(containerRef.current);
         setCurrentPath(newPath);
       }, 0);
     },
-    [containerRef, currentPath, initial]
+    [containerRef, currentPath, initial, locoScroll]
   );
 
   useEffect(() => {
