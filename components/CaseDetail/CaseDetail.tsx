@@ -59,14 +59,16 @@ export function CaseDetail({ data, nextCase }: PropsI): JSX.Element {
     <div data-scroll-section>
       <article className={cls.wrapper}>
         <h1
+          data-transition="case-title"
           className={cn('t-h1', cls.title, {
             [cls.title_right]: fields.makeTitleRight
           })}
         >
-          {fields.title}
+          <span>{fields.title}</span>
         </h1>
 
         <div
+          data-transition="case-cover"
           className={cn(cls.image, cls.cover)}
           style={getStyleRatio(fields.cover)}
         >
@@ -77,7 +79,12 @@ export function CaseDetail({ data, nextCase }: PropsI): JSX.Element {
           )}
         </div>
 
-        <h2 className={cn('t-h2', cls.subtitle)}>{fields.subtitle}</h2>
+        <h2
+          data-transition="case-subtitle"
+          className={cn('t-h2', cls.subtitle)}
+        >
+          {fields.subtitle}
+        </h2>
 
         <div className={cls.container}>
           <div className={cls.info_left}>

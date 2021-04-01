@@ -57,9 +57,14 @@ export function PageTransition({ children, pathname }: PropsI): JSX.Element {
 
       await pause(modalDelay);
 
+      const isFromCaseToCase =
+        currentPath === '/case/[slug]' && newPath === '/case/[slug]';
+      const fromPath = isFromCaseToCase ? 'from/to_case' : currentPath;
+      const toPath = isFromCaseToCase ? 'from/to_case' : newPath;
+
       // Leave
       if (!isInitial)
-        await transitionsMap[currentPath].leave(containerRef.current);
+        await transitionsMap[fromPath].leave(containerRef.current);
 
       // Reset scroll
       if (locoScroll) {
@@ -72,7 +77,7 @@ export function PageTransition({ children, pathname }: PropsI): JSX.Element {
       setCurrentPage(newChildren);
       setTimeout(async () => {
         if (!isInitial)
-          await transitionsMap[newPath].enter(containerRef.current);
+          await transitionsMap[toPath].enter(containerRef.current);
         setCurrentPath(newPath);
         dispatch(setRouteAnimating(false));
       }, 0);
