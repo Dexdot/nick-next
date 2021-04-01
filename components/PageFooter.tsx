@@ -28,6 +28,7 @@ export function PageFooter({
   const router = useRouter();
   const timer = useRef(null);
   const isRouteAnimating = useSelector((s: RootState) => s.routeAnimating);
+  const modal = useSelector((s: RootState) => s.modal);
   const [, setAnimating, isAnimatingRef] = useRefState<boolean>(false);
 
   const goToRoute = useCallback(() => {
@@ -45,7 +46,7 @@ export function PageFooter({
       if (inView && entry.intersectionRatio >= intersectionRatio) {
         if (onEnter) onEnter();
 
-        if (!isAnimatingRef.current && !isRouteAnimating) {
+        if (!isAnimatingRef.current && !isRouteAnimating && !modal.open) {
           startCount();
         }
       } else {
@@ -62,7 +63,8 @@ export function PageFooter({
       isAnimatingRef,
       startCount,
       timer,
-      intersectionRatio
+      intersectionRatio,
+      modal
     ]
   );
 
@@ -74,6 +76,13 @@ export function PageFooter({
       setAnimating(false);
     };
   }, [timer]);
+
+  useEffect(() => {
+    if (modal.open) {
+      clearTimeout(timer?.current);
+      setAnimating(false);
+    }
+  }, [modal.open]);
 
   return (
     <InView

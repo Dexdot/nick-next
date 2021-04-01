@@ -105,6 +105,7 @@ export function Main({ cases }: PropsI): JSX.Element {
   return (
     <div>
       <h2
+        data-transition="main-element"
         className={cn(cls.fixed_title, cls.fixed_title_desktop)}
         style={{
           opacity: titleOpacity
@@ -119,7 +120,7 @@ export function Main({ cases }: PropsI): JSX.Element {
         </span>
       </h2>
 
-      <section data-scroll-section>
+      <section data-scroll-section data-transition="main-element">
         <div className={cls.container}>
           <h2
             className={cls.fixed_title}
@@ -150,6 +151,8 @@ export function Main({ cases }: PropsI): JSX.Element {
           <MainFooter />
         </PageFooter>
       </section>
+
+      <div className={cls.cover} data-transition="main-cover" />
     </div>
   );
 }

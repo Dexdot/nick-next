@@ -82,7 +82,12 @@ export function CasePreview({
   }, [onMouseEnter]);
 
   return (
-    <InView as="div" onChange={handleVisible} threshold={threshold}>
+    <InView
+      as="div"
+      onChange={handleVisible}
+      threshold={threshold}
+      data-transition="main-list-item"
+    >
       <div
         data-index={index + 1}
         className={cn(cls.case, {
