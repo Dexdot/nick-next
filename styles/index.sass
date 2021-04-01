@@ -5,6 +5,10 @@
 @import "typo"
 @import "grid"
 
-body.no-scroll,
-[data-scroll-section]
+body.no-scroll
   overflow: hidden
+
+  main[data-scroll-container]
+    pointer-events: none
+    touch-action: none
+    user-select: none

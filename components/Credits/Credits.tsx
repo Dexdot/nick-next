@@ -4,6 +4,7 @@ import { CSSTransition } from 'react-transition-group';
 
 import { RootState } from '@/store/root-reducer';
 import { closeModal } from '@/store/modal';
+import { useLockScroll } from '@/hooks/useLockScroll';
 
 import cls from './Credits.module.sass';
 
@@ -16,6 +17,8 @@ export function Credits(): JSX.Element {
     modal.name,
     modal.open
   ]);
+
+  useLockScroll(isOpen);
 
   const close = useCallback(() => {
     dispatch(closeModal());

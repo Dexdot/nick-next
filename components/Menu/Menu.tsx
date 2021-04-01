@@ -4,6 +4,7 @@ import { CSSTransition } from 'react-transition-group';
 
 import { NavLink } from '@/components/NavLink';
 import { RootState } from '@/store/root-reducer';
+import { useLockScroll } from '@/hooks/useLockScroll';
 
 import cls from './Menu.module.sass';
 import { Instagram } from './Icons';
@@ -23,6 +24,8 @@ export function Menu(): JSX.Element {
     modal.name,
     modal.open
   ]);
+
+  useLockScroll(isOpen);
 
   return (
     <CSSTransition

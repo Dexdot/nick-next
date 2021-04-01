@@ -43,7 +43,7 @@
     padding-top: 0
 
   @media (max-width: $mob)
-    padding-top: 40px
+    padding-top: 32px
 
 .head
   width: 100%
@@ -95,13 +95,16 @@
 
   @media (max-width: $mob)
     transition: transform 0.2s ease
-    width: calc(100vw - (2 * var(--unit)))
+    width: calc((var(--vh, 1vh) * 88) * 0.5625)
 
   &::before
     content: ''
     display: block
     width: 100%
     padding-bottom: 177.77%
+
+    @media (max-width: $mob)
+      padding-bottom: calc(var(--vh, 1vh) * 88)
 
 .slide
   img,

@@ -15,6 +15,7 @@ import { RootState } from '@/store/root-reducer';
 import { closeModal } from '@/store/modal';
 import { isImage, isVideo } from '@/utils/utils';
 import { ContentfulImage } from '@/components/ContentfulImage';
+import { useLockScroll } from '@/hooks/useLockScroll';
 
 import cls from './Stories.module.sass';
 
@@ -28,9 +29,12 @@ export function Stories(): JSX.Element {
     modal.name,
     modal.open
   ]);
+
   const close = useCallback(() => {
     dispatch(closeModal());
   }, []);
+
+  useLockScroll(isOpen);
 
   const cleanUrl = useMemo<string>(
     () => data.url.replace(/(^\w+:|^)\/\//, ''),
