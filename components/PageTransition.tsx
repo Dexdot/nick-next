@@ -8,6 +8,7 @@ import { closeModal } from '@/store/modal';
 import { pause } from '@/utils/utils';
 import { useTransitionFix } from '@/hooks/useTransitionFix';
 import { transitionsMap } from '@/transitions/map';
+import { disableDarkmode } from '@/store/darkmode';
 
 interface PropsI {
   pathname: string;
@@ -63,8 +64,10 @@ export function PageTransition({ children, pathname }: PropsI): JSX.Element {
       const toPath = isFromCaseToCase ? 'from/to_case' : newPath;
 
       // Leave
-      if (!isInitial)
+      if (!isInitial) {
+        if (isFromCaseToCase) dispatch(disableDarkmode());
         await transitionsMap[fromPath].leave(containerRef.current);
+      }
 
       // Reset scroll
       if (locoScroll) {

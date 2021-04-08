@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
+import { gsap } from 'gsap';
 import cn from 'classnames';
 
 import { ICase, ICaseFields } from '@/contentful/types';
@@ -8,6 +9,7 @@ import { openModal } from '@/store/modal';
 import { setStories } from '@/store/stories';
 import { getStyleRatio } from '@/utils/utils';
 import { PageFooter } from '@/components/PageFooter';
+import { resetNextCaseStyleProps } from '@/transitions/cases';
 
 import cls from '@/components/CaseDetail/CaseDetail.module.sass';
 import { ContentfulImage } from '@/components/ContentfulImage';
@@ -15,6 +17,7 @@ import { CaseStories } from '@/components/CaseDetail/CaseStories/CaseStories';
 import { CaseFooter } from './CaseFooter/CaseFooter';
 import { CaseRich } from './CaseRich';
 import { CaseNext } from './CaseNext/CaseNext';
+import { CaseTransition } from './CaseTransition/CaseTransition';
 
 interface PropsI {
   data: ICase;
@@ -55,68 +58,84 @@ export function CaseDetail({ data, nextCase }: PropsI): JSX.Element {
     dispatch(openModal('stories'));
   }, [fields]);
 
+  const onCoverLoad = useCallback(() => {
+    setTimeout(() => {
+      resetNextCaseStyleProps();
+    }, 10);
+  }, []);
+
   return (
-    <div data-scroll-section>
-      <article className={cls.wrapper}>
-        <h1
-          data-transition="case-title"
-          className={cn('t-h1', cls.title, {
-            [cls.title_right]: fields.makeTitleRight
-          })}
-        >
-          <span>{fields.title}</span>
-        </h1>
+    <>
+      <div data-scroll-section>
+        <article className={cls.wrapper} data-transition="case-wrapper">
+          <h1
+            data-transition="case-title"
+            className={cn('t-h1', cls.title, {
+              [cls.title_right]: fields.makeTitleRight
+            })}
+          >
+            <span>{fields.title}</span>
+          </h1>
 
-        <div
-          data-transition="case-cover"
-          className={cn(cls.image, cls.cover)}
-          style={getStyleRatio(fields.cover)}
-        >
-          <ContentfulImage img={fields.cover} />
+          <div
+            data-transition="case-cover"
+            className={cn(cls.image, cls.cover)}
+            style={getStyleRatio(fields.cover)}
+          >
+            <ContentfulImage
+              key={fields.slug}
+              img={fields.cover}
+              onLoad={onCoverLoad}
+            />
 
-          {hasStories && (
-            <CaseStories stories={fields.stories} onClick={onStoriesClick} />
-          )}
-        </div>
-
-        <h2
-          data-transition="case-subtitle"
-          className={cn('t-h2', cls.subtitle)}
-        >
-          {fields.subtitle}
-        </h2>
-
-        <div className={cls.container}>
-          <div className={cls.info_left}>
-            <p>{fields.date}</p>
-          </div>
-          <div className={cls.info_right}>
-            {hasRoles && (
-              <>
-                {fields.roles.map((role) => (
-                  <p key={role}>{role}</p>
-                ))}
-              </>
+            {hasStories && (
+              <CaseStories stories={fields.stories} onClick={onStoriesClick} />
             )}
-            <p className={cls.client}>{fields.client}</p>
           </div>
 
-          <CaseRich fields={fields} />
-          <CaseFooter fields={fields} />
-        </div>
-      </article>
+          <h2
+            data-transition="case-subtitle"
+            className={cn('t-h2', cls.subtitle)}
+          >
+            {fields.subtitle}
+          </h2>
+
+          <div className={cls.container}>
+            <div className={cls.info_left}>
+              <p>{fields.date}</p>
+            </div>
+            <div className={cls.info_right}>
+              {hasRoles && (
+                <>
+                  {fields.roles.map((role) => (
+                    <p key={role}>{role}</p>
+                  ))}
+                </>
+              )}
+              <p className={cls.client}>{fields.client}</p>
+            </div>
+
+            <CaseRich fields={fields} />
+            <CaseFooter fields={fields} />
+          </div>
+        </article>
+
+        {nextCase && (
+          <PageFooter
+            href={`/case/${nextCase.fields.slug}`}
+            onEnter={() => dispatch(enableDarkmode())}
+            onLeave={() => dispatch(disableDarkmode())}
+            intersectionRatio={0.3}
+          >
+            <CaseNext nextCase={nextCase} />
+          </PageFooter>
+        )}
+      </div>
 
       {nextCase && (
-        <PageFooter
-          href={`/case/${nextCase.fields.slug}`}
-          onEnter={() => dispatch(enableDarkmode())}
-          onLeave={() => dispatch(disableDarkmode())}
-          intersectionRatio={0.3}
-        >
-          <CaseNext nextCase={nextCase} />
-        </PageFooter>
+        <CaseTransition key={nextCase.fields.slug} nextCase={nextCase} />
       )}
-    </div>
+    </>
   );
 }
 
