@@ -12,7 +12,7 @@ interface PropsI {
 
 export function CaseNext({ nextCase }: PropsI): JSX.Element {
   return (
-    <section className={cls.container}>
+    <section className={cls.container} data-transition="next-container">
       <div className={cls.inner}>
         <h2 className={cn('t-h1', cls.title)} data-transition="next-title-from">
           {nextCase.fields.title}

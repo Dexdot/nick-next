@@ -51,11 +51,13 @@ function resetCaseStyleProps(node: any) {
 export function resetNextCaseStyleProps(): void {
   const cover = document.querySelector('.case-cover-placeholder');
   if (cover) {
-    const fromImg = document.querySelector('.next-image-from');
-    const fromTitle = document.querySelector(
-      '[data-transition="next-title-from"]'
-    );
-    gsap.set([fromImg, fromTitle], { opacity: 1 });
+    setTimeout(() => {
+      const fromImg = document.querySelector('.next-image-from');
+      const fromTitle = document.querySelector(
+        '[data-transition="next-title-from"]'
+      );
+      gsap.set([fromImg, fromTitle], { opacity: 1 });
+    }, 10);
 
     cover.remove();
     document.body.classList.remove('no-scroll');
