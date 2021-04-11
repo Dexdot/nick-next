@@ -44,7 +44,7 @@ export function Head({
       <meta name="twitter:title" content={OGTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={OGImage} />
-      <meta name="theme-color" content="#ffffff" />
+      <meta name="theme-color" content="#000000" />
       <meta name="msapplication-TileColor" content="#000000" />
       <meta
         name="msapplication-TileImage"
@@ -74,8 +74,9 @@ export function Head({
       <link
         rel="mask-icon"
         href="/favicon/safari-pinned-tab.svg"
-        color="#5bbad5"
+        color="#000000"
       />
+      <link rel="shortcut icon" href="/favicon/favicon.ico" />
     </NextHead>
   );
 }
