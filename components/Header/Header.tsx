@@ -15,6 +15,7 @@ import { LogoWhite, LogoBlack } from './Logo';
 import { MenuButton } from './MenuButton';
 
 const OTHER_MODALS = ['menu', 'credits'];
+const ROUTES_TO_SHOW = ['/', '/black'];
 
 export function Header(): JSX.Element {
   const router = useRouter();
@@ -24,6 +25,7 @@ export function Header(): JSX.Element {
 
   const isDarkmode = useSelector((s: RootState) => s.darkmode);
   const modal = useSelector((s: RootState) => s.modal);
+  const isRouteAnimating = useSelector((s: RootState) => s.routeAnimating);
 
   const ctx = useLocomotiveScroll();
   const isScrolling = useIsScrolling(ctx);
@@ -31,6 +33,14 @@ export function Header(): JSX.Element {
   const isHeaderDark = useMemo(() => {
     return modal.open ? OTHER_MODALS.includes(modal.name) : isDarkmode;
   }, [modal.open, modal.name, isDarkmode]);
+
+  const showBWLink = useMemo(() => {
+    if (modal.open) {
+      return false;
+    }
+
+    return ROUTES_TO_SHOW.some((r) => r === router.route);
+  }, [modal.open, router.route]);
 
   const onButtonClick = useCallback(() => {
     if (modal.open) {
@@ -47,7 +57,7 @@ export function Header(): JSX.Element {
   return (
     <header
       className={cn(cls.header, {
-        [cls.hidden]: isScrolling,
+        [cls.hidden]: isScrolling && !isRouteAnimating,
         [cls.dark]: isHeaderDark
       })}
     >
@@ -61,11 +71,11 @@ export function Header(): JSX.Element {
 
           <Link href={isDarkmode ? '/' : '/black'}>
             <a
-              className={cls.bw_link}
+              className={cn(cls.bw_link, { [cls.bw_link_visible]: showBWLink })}
               href={isDarkmode ? '/' : '/black'}
               data-dark={isDarkmode}
             >
-              {isDarkmode ? 'white' : 'black'}
+              {isDarkmode ? 'index' : 'black'}
             </a>
           </Link>
 
