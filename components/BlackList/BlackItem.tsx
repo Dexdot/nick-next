@@ -50,7 +50,9 @@ export function BlackItem({ asset }: PropsI): JSX.Element {
   return (
     <InView as="div" onChange={handleVisible}>
       <div
-        className={cls.asset}
+        className={cn(cls.asset, {
+          [cls.asset_loaded]: isLoaded
+        })}
         style={
           {
             '--ratio': `${ratio}%`

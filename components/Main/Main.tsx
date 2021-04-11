@@ -13,7 +13,6 @@ import cn from 'classnames';
 import type { ICasesFields } from '@/contentful/types';
 import type { RootState } from '@/store/root-reducer';
 import { disableDarkmode, enableDarkmode } from '@/store/darkmode';
-import { setPageLoaded } from '@/store/page-loaded';
 
 import { PageFooter } from '@/components/PageFooter';
 import { MainLoader } from '@/components/Main/MainLoader';
@@ -119,16 +118,6 @@ export function Main({ cases }: PropsI): JSX.Element {
   const showPreloader = useMemo(() => {
     return router.route === '/' && !isPageLoaded;
   }, [isPageLoaded, router.route]);
-
-  useEffect(() => {
-    if (document.readyState === 'complete') {
-      dispatch(setPageLoaded(true));
-    } else {
-      window.addEventListener('load', () => {
-        dispatch(setPageLoaded(true));
-      });
-    }
-  }, []);
 
   return (
     <div>

@@ -9,6 +9,7 @@ import { pause } from '@/utils/utils';
 import { useTransitionFix } from '@/hooks/useTransitionFix';
 import { transitionsMap } from '@/transitions/map';
 import { disableDarkmode } from '@/store/darkmode';
+import { setPageLoaded } from '@/store/page-loaded';
 
 interface PropsI {
   pathname: string;
@@ -93,6 +94,16 @@ export function PageTransition({ children, pathname }: PropsI): JSX.Element {
   }, [children, pathname]);
 
   useTransitionFix();
+
+  useEffect(() => {
+    if (document.readyState === 'complete') {
+      dispatch(setPageLoaded(true));
+    } else {
+      window.addEventListener('load', () => {
+        dispatch(setPageLoaded(true));
+      });
+    }
+  }, []);
 
   return <div ref={containerRef}>{currentPage}</div>;
 }
