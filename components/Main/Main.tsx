@@ -1,12 +1,22 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
+import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocomotiveScroll } from 'react-locomotive-scroll';
 import cn from 'classnames';
 
-import { ICasesFields } from '@/contentful/types';
+import type { ICasesFields } from '@/contentful/types';
+import type { RootState } from '@/store/root-reducer';
 import { disableDarkmode, enableDarkmode } from '@/store/darkmode';
+import { setPageLoaded } from '@/store/page-loaded';
 
 import { PageFooter } from '@/components/PageFooter';
+import { MainLoader } from '@/components/Main/MainLoader';
 
 import cls from './Main.module.sass';
 import { CasePreview } from './CasePreview';
@@ -19,6 +29,8 @@ interface PropsI {
 }
 
 export function Main({ cases }: PropsI): JSX.Element {
+  const router = useRouter();
+
   // Darkmode
   const dispatch = useDispatch();
 
@@ -102,6 +114,22 @@ export function Main({ cases }: PropsI): JSX.Element {
     };
   }, [isReady]);
 
+  // Preloader
+  const isPageLoaded = useSelector((s: RootState) => s.pageLoaded);
+  const showPreloader = useMemo(() => {
+    return router.route === '/' && !isPageLoaded;
+  }, [isPageLoaded, router.route]);
+
+  useEffect(() => {
+    if (document.readyState === 'complete') {
+      dispatch(setPageLoaded(true));
+    } else {
+      window.addEventListener('load', () => {
+        dispatch(setPageLoaded(true));
+      });
+    }
+  }, []);
+
   return (
     <div>
       <h2
@@ -153,6 +181,7 @@ export function Main({ cases }: PropsI): JSX.Element {
       </section>
 
       <div className={cls.cover} data-transition="main-cover" />
+      <MainLoader show={showPreloader} />
     </div>
   );
 }
