@@ -69,8 +69,6 @@ export function PageFooter({
   );
 
   useEffect(() => {
-    startCount();
-
     return () => {
       clearTimeout(timer?.current);
       setAnimating(false);
