@@ -36,6 +36,12 @@ export function PageFooter({
     router.push(href);
   }, [href]);
 
+  const onClick = useCallback(() => {
+    if (!isAnimatingRef.current && !isRouteAnimating && !modal.open) {
+      goToRoute();
+    }
+  }, [isRouteAnimating, isAnimatingRef, modal]);
+
   const startCount = useCallback(() => {
     setAnimating(true);
     timer.current = setTimeout(goToRoute, duration);
@@ -88,7 +94,7 @@ export function PageFooter({
       onChange={handleVisible}
       threshold={threshold}
       style={{ cursor: 'pointer' }}
-      onClick={goToRoute}
+      onClick={onClick}
     >
       {children}
     </InView>

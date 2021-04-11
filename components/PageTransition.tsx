@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocomotiveScroll } from 'react-locomotive-scroll';
 import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 import { setRouteAnimating } from '@/store/route-animating';
 import type { RootState } from '@/store/root-reducer';
@@ -10,6 +11,7 @@ import { useTransitionFix } from '@/hooks/useTransitionFix';
 import { transitionsMap } from '@/transitions/map';
 import { disableDarkmode } from '@/store/darkmode';
 import { setPageLoaded } from '@/store/page-loaded';
+import { useRefState } from '@/hooks/useRefState';
 
 interface PropsI {
   pathname: string;
@@ -17,12 +19,14 @@ interface PropsI {
 }
 
 export function PageTransition({ children, pathname }: PropsI): JSX.Element {
+  const router = useRouter();
   const dispatch = useDispatch();
   const containerRef = useRef(null);
   const modal = useSelector((s: RootState) => s.modal);
 
   const { scroll: locoScroll } = useLocomotiveScroll();
 
+  const [, setBack, isBackRef] = useRefState<boolean>(false);
   const [initial, setInitial] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<React.ReactElement>(children);
   const [currentPath, setCurrentPath] = useState<string>(pathname);
@@ -60,7 +64,9 @@ export function PageTransition({ children, pathname }: PropsI): JSX.Element {
       await pause(modalDelay);
 
       const isFromCaseToCase =
-        currentPath === '/case/[slug]' && newPath === '/case/[slug]';
+        currentPath === '/case/[slug]' &&
+        newPath === '/case/[slug]' &&
+        !isBackRef.current;
       const fromPath = isFromCaseToCase ? 'from/to_case' : currentPath;
       const toPath = isFromCaseToCase ? 'from/to_case' : newPath;
 
@@ -83,10 +89,12 @@ export function PageTransition({ children, pathname }: PropsI): JSX.Element {
         if (!isInitial)
           await transitionsMap[toPath].enter(containerRef.current);
         setCurrentPath(newPath);
+
+        setBack(false);
         dispatch(setRouteAnimating(false));
       }, 0);
     },
-    [containerRef, currentPath, initial, locoScroll, modal.open]
+    [containerRef, currentPath, initial, locoScroll, modal.open, isBackRef]
   );
 
   useEffect(() => {
@@ -94,6 +102,13 @@ export function PageTransition({ children, pathname }: PropsI): JSX.Element {
   }, [children, pathname]);
 
   useTransitionFix();
+
+  useEffect(() => {
+    router.beforePopState(() => {
+      setBack(true);
+      return true;
+    });
+  }, []);
 
   useEffect(() => {
     if (document.readyState === 'complete') {
