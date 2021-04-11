@@ -37,7 +37,8 @@ export function PageFooter({
   }, [href]);
 
   const onClick = useCallback(() => {
-    if (!isAnimatingRef.current && !isRouteAnimating && !modal.open) {
+    if (!isRouteAnimating && !modal.open) {
+      clearTimeout(timer?.current);
       goToRoute();
     }
   }, [isRouteAnimating, isAnimatingRef, modal]);
