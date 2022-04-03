@@ -234,20 +234,11 @@ export function About({ data, mobileText }: PropsI): JSX.Element {
               </li>
               <li style={{ '--delay': `0.35s` } as React.CSSProperties}>
                 <a
-                  href="https://instagram.com/stereocage"
+                  href="https://www.linkedin.com/in/adamsonline/"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  instagram
-                </a>
-              </li>
-              <li style={{ '--delay': `0.4s` } as React.CSSProperties}>
-                <a
-                  href="https://facebook.com/stereocage"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  facebook
+                  linkedin
                 </a>
               </li>
             </ul>
