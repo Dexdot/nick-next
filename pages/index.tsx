@@ -26,6 +26,7 @@ export default function Index({
   return (
     <>
       <Head title="Index" />
+
       <Main cases={cases} />
     </>
   );
